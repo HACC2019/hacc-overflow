@@ -1,0 +1,2 @@
+# hacc-overflow
+A web application that has both user and admin components. the Administration component displays key metrics of EV charging stations across Hawaii with predictive analysis of congestion and health of the stations. The user component shows the nearest location and estimated availability of each station. The usage of the user component will be monitored to predict where new stations should be installed.
