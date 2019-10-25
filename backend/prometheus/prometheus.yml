@@ -13,4 +13,5 @@ scrape_configs:
          - targets: 
            - "ev_charger_a:8000"
            - "ev_charger_b:8000"
+           - "ev_charger_c:8000" # this one is down for illustration
 
