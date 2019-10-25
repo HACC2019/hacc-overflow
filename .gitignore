@@ -1,5 +1,6 @@
 venv/
 client/build/
 client/node_modules/
+backend/grafana/admin.password
 
 .idea/

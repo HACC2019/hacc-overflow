@@ -1,0 +1,7 @@
+GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,natel-plotly-panel,grafana-simple-json-datasource,grafana-worldmap-panel
+GF_AUTH_ANONYMOUS_ENABLED=true
+GF_AUTH_ANONYMOUS_ORG_NAME="Main Org."
+GF_AUTH_ANONYMOUS_ROLE="Viewer"
+#GF_AUTH_DISABLE_LOGIN_FORM=true
+VIRTUAL_HOST=iot.aksw.org
+VIRTUAL_PORT=3000
