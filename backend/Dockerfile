@@ -1,0 +1,9 @@
+FROM python:3
+
+RUN pip install --no-cache-dir prometheus_client
+
+COPY ev_charger_simulator.py .
+COPY polls_A.json .
+COPY polls_B.json .
+
+CMD ["python", "./ev_charger_simulator.py"]
