@@ -16,12 +16,6 @@ PORT_TYPE = 'Port Type'
 PAYMENT_MODE = 'Payment Mode'
 
 
-def init():
-    df = pd.read_csv(F_NAME)
-    df = clean_dataframe(df)
-    return df
-
-
 def clean_dataframe(df):
     df[SESSION_AMOUNT] = df[SESSION_AMOUNT].str.replace('$', '')
     df[SESSION_AMOUNT] = df[SESSION_AMOUNT].astype("float64")
@@ -30,11 +24,18 @@ def clean_dataframe(df):
     df[END_TIME] = df[START_TIME].astype("datetime64")
 
     df.set_index(START_TIME, inplace=True)
+    df.sort_values(by=START_TIME,  inplace=True, ascending=True)
 
-    return df
+    df_a = df.where(df[CHARGE_STATION_NAME] == "A")
+    df_b = df.where(df[CHARGE_STATION_NAME] == "B")
 
-def main (df):
-    plot = df.plot()
+    df_a.dropna(inplace=True)
+    df_b.dropna(inplace=True)
 
-df = init()
+    return df_a, df_b
+
+
+data_frame = pd.read_csv(F_NAME)
+df_a, df_b = clean_dataframe(data_frame)
+
 
