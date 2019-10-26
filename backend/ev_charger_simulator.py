@@ -26,7 +26,7 @@ with open(f"polls_{station}.json") as polls_file:
 metrics_prefix = "evc_"  # electic vehicle charger
 
 # general information about the charger
-info = Info(f"{metrics_prefix}info", "EV Charger name meta information")
+info = Info(f"{metrics_prefix}_meta", "EV Charger name meta information")
 
 payment_mode = Enum(
     f"{metrics_prefix}payment_method",
@@ -39,7 +39,7 @@ port_type = Enum(
     states=["", "CHADEMO", "DCCOMBOTYP1"],
 )
 session_initiated_by = Enum(
-    f"{metrics_prefix}evc_session_initiated_by",
+    f"{metrics_prefix}session_initiated_by",
     "Session initiated by",
     states=["", "MOBILE", "DEVICE", "WEB"],
 )
