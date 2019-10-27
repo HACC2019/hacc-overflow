@@ -21,9 +21,8 @@ def clean_dataframe(df):
     df[SESSION_AMOUNT] = df[SESSION_AMOUNT].astype("float64")
 
     df[START_TIME] = df[START_TIME].astype("datetime64")
-    df[END_TIME] = df[START_TIME].astype("datetime64")
+    df[END_TIME] = df[END_TIME].astype("datetime64")
 
-    df.set_index(START_TIME, inplace=True)
     df.sort_values(by=START_TIME,  inplace=True, ascending=True)
 
     df_a = df.where(df[CHARGE_STATION_NAME] == "A")
@@ -36,6 +35,7 @@ def clean_dataframe(df):
 
 
 data_frame = pd.read_csv(F_NAME)
-df_a, df_b = clean_dataframe(data_frame)
+dataframe_a, dataframe_b = clean_dataframe(data_frame)
+
 
 
