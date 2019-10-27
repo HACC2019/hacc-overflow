@@ -3,4 +3,6 @@ client/build/
 client/node_modules/
 backend/grafana/admin.password
 
+__pycache__/
+
 .idea/
