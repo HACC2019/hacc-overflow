@@ -2,6 +2,7 @@ from prometheus_client import start_http_server, Summary, Info, Gauge, Enum
 import random
 import time
 import json
+import geohash2
 import sys
 import datetime as dt
 from os import environ
@@ -15,8 +16,9 @@ station = environ.get("STATION", "A")
 port = environ.get("PORT", 8000)
 
 # position
-latitude = environ.get("LAT", 21.300672)
-longitude = environ.get("LONG", -157.851773)
+latitude = float(environ.get("LAT", 21.300672))
+longitude = float(environ.get("LONG", -157.851773))
+geohash = geohash2.encode(latitude, longitude)
 
 
 polls = []
@@ -26,7 +28,7 @@ with open(f"polls_{station}.json") as polls_file:
 metrics_prefix = "evc_"  # electic vehicle charger
 
 # general information about the charger
-info = Info(f"{metrics_prefix}_meta", "EV Charger name meta information")
+info = Info(f"{metrics_prefix}meta", "EV Charger name meta information")
 
 payment_mode = Enum(
     f"{metrics_prefix}payment_method",
@@ -71,6 +73,7 @@ def process_request():
                 "charger_name": f"Station {station}",
                 "latitude": str(latitude),
                 "longitude": str(longitude),
+                "geohash": geohash,
                 "session_id": poll[2],
             }
         )

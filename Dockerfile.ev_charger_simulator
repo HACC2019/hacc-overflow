@@ -1,6 +1,6 @@
 FROM python:3
 
-RUN pip install --no-cache-dir prometheus_client
+RUN pip install --no-cache-dir prometheus_client geohash2
 
 COPY ev_charger_simulator.py .
 COPY polls_A.json .

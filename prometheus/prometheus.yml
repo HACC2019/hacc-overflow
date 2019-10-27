@@ -8,6 +8,12 @@ scrape_configs:
     static_configs:
          - targets: ['localhost:9090']
 
+  - job_name: 'lookups'
+    scrape_interval: 1m 
+    metrics_path: "/lookups"
+    static_configs:
+         - targets: ['app:8000']
+
   - job_name: 'ev_charger'
     static_configs:
          - targets: 
