@@ -1,6 +1,0 @@
-hacc.aparcar.org
-
-encode gzip zstd
-
-reverse_proxy /internal localhost:3000
-
