@@ -1,16 +1,20 @@
 from flask import Flask, request, render_template, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
-from flask_api.get_average import get_average
+from flask_api.avg_duration import get_avg
 
 import geohash2
 
+# define app and allow CORS
 app = Flask(__name__, static_folder="client/build/static", template_folder="build")
-app.config["REDIS_URL"] = "redis://redis:6379/0"
-app.register_blueprint(get_average.getavg_api, url_prefix="/api")
-redis_client = FlaskRedis(app)
 CORS(app)
 
+# register apis from modules
+app.register_blueprint(get_avg.avg_duration_api, url_prefix="/api")
+
+
+app.config["REDIS_URL"] = "redis://redis:6379/0"
+redis_client = FlaskRedis(app)
 
 @app.route("/lookup", methods=["GET"])
 def lookup():
