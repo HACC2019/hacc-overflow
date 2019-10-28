@@ -30,12 +30,9 @@ function App() {
       <div>
         <Dashboard />
       </div>
-        {/*
         <h1>{message}</h1>
         <input type={"text"} onChange={(e) => setName(e.target.value)}/>
           <button onClick={onClick}>Submit</button>
-        */}
-
       </>
 
   );
