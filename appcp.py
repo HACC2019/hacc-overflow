@@ -1,25 +1,30 @@
 from flask import Flask, request, render_template, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
-from flask_api.get_average import get_average
-
-import geohash2
 
 app = Flask(__name__, static_folder="client/build/static", template_folder="build")
+import geohash2
+
 app.config["REDIS_URL"] = "redis://redis:6379/0"
-app.register_blueprint(get_average.getavg_api, url_prefix="/api")
 redis_client = FlaskRedis(app)
 CORS(app)
+
+from flask_api.get_average import get_average
+
+app.register_blueprint(get_average.getavg_api, url_prefix="/api")
 
 
 @app.route("/lookup", methods=["GET"])
 def lookup():
     """Add EV charger lookup to to redis
+
     Automatically converts coordinates to geohash to be stored in database
+
     Args (GET):
         latitude (float): Latitude of lookup
         longitdue (float): Longitude of lookup
         geohash (str): Geohash of lookup
+
     Returns (JSON):
         message (200): if successfully added lookup to redis
         error (400): if coordinates and Geohash are missing
@@ -61,6 +66,7 @@ def hello():
         name = "World"
 
     return jsonify({"message": f"Hello, {name}!"}), 200
+
 
 
 @app.route("/")
