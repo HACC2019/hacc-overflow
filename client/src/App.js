@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Dashboard from './containers/Dashboard';
+
 
 const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api';
 
@@ -22,12 +24,20 @@ function App() {
       }
   }
 
+
   return (
       <>
+      <div>
+        <Dashboard />
+      </div>
+        {/*
         <h1>{message}</h1>
         <input type={"text"} onChange={(e) => setName(e.target.value)}/>
           <button onClick={onClick}>Submit</button>
+        */}
+
       </>
+
   );
 
 }
