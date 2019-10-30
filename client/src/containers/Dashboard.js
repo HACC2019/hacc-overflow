@@ -34,7 +34,7 @@ paper: {
       flexDirection: 'column',
 },
 fixedHeight: {
-  height: 240,
+  height: 500,
 },
 }));
 
@@ -86,7 +86,7 @@ export default function Dashboard() {
                   </Paper>
                 </Grid>
                 {/* CardContainer*/}
-                <Grid item xs={12} lg={9} >
+                <Grid item xs={12} md={8}>
                   <Paper className={fixedHeightPaper}>
                     <CardContainer />
                   </Paper>
