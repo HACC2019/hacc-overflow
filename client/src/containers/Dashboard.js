@@ -22,7 +22,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CardContainer from './CardContainer';
 import logo192 from '../components/logo192.png';
-
+import MapComponent from '../components/MapComponent.js';
 
 const drawerWidth = 240;
 
@@ -110,6 +110,33 @@ avatar: {
 },
 }));
 
+const hecoStationLocations = [
+  {
+      location: {latitude: 21.407750, longitude: -157.949610}, 
+      address: '98-1268 Kaahumanu St Pearl City, HI 96782'
+  }, 
+  {
+      location: {latitude: 21.318000, longitude: -157.869290},
+      address: '801 Dillingham Building Honolulu, HI 96817'
+  },
+  {
+      location: {latitude: 21.293830, longitude: -157.710410},
+      address: '515 Pepeekeo St Honolulu, HI 96825'
+  },
+  {
+      location: {latitude: 21.436700, longitude: -157.826360},
+      address: '47-388 Hui Iwa Street Kaneohe, HI 96744'
+  },
+  {
+      location: {latitude: 21.525810, longitude: -158.037780},
+      address: '64-1550 Kamehameha Hwy Wahiawa, HI 96786'
+  },
+  {
+      location: {latitude: 21.589030, longitude: -158.103660},
+      address: '66-145 Kamehameha Highway Haleiwa, HI 96712'
+  }
+];
+
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -188,9 +215,8 @@ export default function Dashboard() {
           <div className={classes.appBarSpacer} />
           <Typography component="div" style={{ backgroundColor: '#ebf3fe', height: '100vh' }}>
           <Container maxWidth="lg" className={classes.container}>
-
+          
               <Grid container spacing={2}>
-                {/* MAP */}
                 <Grid item xs={12} md={8} lg={9}>
                   <Paper className={fixedHeightPaper}>
                     Temporary placeholder for map component
@@ -203,7 +229,9 @@ export default function Dashboard() {
                   </Paper>
                 </Grid>
               </Grid>
-
+              <div>
+                <MapComponent markers={hecoStationLocations} userLocation={{latitude: 21.407750, longitude: -157.949610}}/>
+              </div>
           </Container>
           </Typography>
         </main>
