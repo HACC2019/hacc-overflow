@@ -79,8 +79,8 @@ export default function Dashboard() {
           <Typography component="div" style={{ backgroundColor: '#ebf3fe', height: '100vh' }}>
           <Container maxWidth="lg" className={classes.container}>
           
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={8} lg={9}>
+              <Grid container spacing={2} justify="center" alignItems="center">
+                <Grid item xs={12} md={8} lg={9} >
                   <Paper className={'100vh'}>
                     <MapComponent markers={hecoStationLocations} userLocation={{latitude: 21.407750, longitude: -157.949610}}/>
                   </Paper>

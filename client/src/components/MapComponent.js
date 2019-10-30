@@ -29,7 +29,7 @@ export default class MapComponent extends Component {
                 <Map
                     center={mapCenter}
                     zoom={zoomLevel}
-                    style={{height: '500px', width: '500px'}}
+                    style={{height: '500px', width: '100%'}}
                 >
                     <TileLayer
                         url='http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
