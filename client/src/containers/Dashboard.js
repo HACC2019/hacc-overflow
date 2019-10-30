@@ -7,11 +7,9 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CardContainer from './CardContainer';
-import logo512 from '../components/logo512.png';
 import MapComponent from '../components/MapComponent.js';
 import TopBar from '../components/TopBar';
 
-const drawerWidth = 240;
 
 
 const useStyles = makeStyles(theme => ({
@@ -83,8 +81,8 @@ export default function Dashboard() {
           
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8} lg={9}>
-                  <Paper className={fixedHeightPaper}>
-                    Temporary placeholder for map component
+                  <Paper className={'100vh'}>
+                    <MapComponent markers={hecoStationLocations} userLocation={{latitude: 21.407750, longitude: -157.949610}}/>
                   </Paper>
                 </Grid>
                 {/* CardContainer*/}
@@ -94,11 +92,10 @@ export default function Dashboard() {
                   </Paper>
                 </Grid>
               </Grid>
-              <div>
-                <MapComponent markers={hecoStationLocations} userLocation={{latitude: 21.407750, longitude: -157.949610}}/>
-              </div>
+
           </Container>
           </Typography>
+
         </main>
       </div>
   );

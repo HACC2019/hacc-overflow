@@ -32,7 +32,7 @@ export default class MapComponent extends Component {
                     style={{height: '500px', width: '500px'}}
                 >
                     <TileLayer
-                        url='http://tile.thunderforest.com/landscape/${z}/${x}/${y}.png'
+                        url='http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
                     />
                     {LeafletMarkers}
                     <Marker position={{lat: this.props.userLocation.latitude, lng: this.props.userLocation.longitude}} icon={redIcon}>
