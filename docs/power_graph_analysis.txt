@@ -1,0 +1,56 @@
+approximation function : f(x) = k/sqrt(x + c) + j
+
+if duration = [x_0, x_1]
+assume that f(x_1) = 0
+
+assume f(x_0) = some % of total charge
+
+using example:
+
+duration: 27 minutes
+peak: 38
+
+function:
+f(0) = k / sqrt(c) + l = 38
+-> l = 38 - k/sqrt(c)
+-> f(x) = k/sqrt(x + c) +  38 - k/sqrt(c)
+
+f(27min) = 0
+
+solving for k:
+k = 38 sqrt(27+C) sqrt(c) / (sqrt(27 + c) - sqrt(c))
+
+chose c to fit given graph: c = 4
+g(x) = (120 / sqrt(x + 4)) + 38 - 120/2
+
+integrate: 9.995 kwH
+
+peak is 40 kw, area is 10kwh, so we can make peak = 4*area.
+
+
+start over:
+f(x) = k/sqrt(x + c) + j // hypothetical f
+f(0) = peak = 4 * E
+f(D) = 0.
+
+first solve for j using F(D) = 0:
+j = -k/sqrt(d+c)
+
+f(0) = 4 * E
+4 * E = k/sqrt(x + c) -k/sqrt(x+c)  solve for k:
+k = - ( 4E sqrt(c) sqrt(d + c) ) / (sqrt(c) - sqrt(d + c) )
+
+f(x) = (4 E sqrt(c) (sqrt ( x + c ) - sqrt (d + c))) / (sqrt(c) - sqrt(d + c)) sqrt(x + c))
+
+integrate f(x) from 0 to D which equals E, and solve for c:
+    1 / (8 (2d - 1))
+
+constants:
+
+c = 1 / 16 d - 8
+k = - ( 4E sqrt(c) sqrt(d + c) ) / (sqrt(c) - sqrt(d + c) )
+j = -k/sqrt(d+c)
+
+f(x) = k/sqrt(x + c) + j
+
+
