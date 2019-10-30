@@ -25,6 +25,7 @@ export default class MapComponent extends Component {
             </Marker>
           ));
         return (
+            <div>
                 <Map
                     center={mapCenter}
                     zoom={zoomLevel}
@@ -33,8 +34,14 @@ export default class MapComponent extends Component {
                     <TileLayer
                         url='http://tile.thunderforest.com/landscape/${z}/${x}/${y}.png'
                     />
-                    
+                    {LeafletMarkers}
+                    <Marker position={{lat: this.props.userLocation.latitude, lng: this.props.userLocation.longitude}} icon={redIcon}>
+                        <Popup>
+                            <span>Your position</span>
+                        </Popup>
+                    </Marker>
                 </Map>
+            </div>
         );
     }
 }

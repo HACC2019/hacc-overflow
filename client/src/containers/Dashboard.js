@@ -7,11 +7,12 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CardContainer from './CardContainer';
-import logo192 from '../components/logo192.png';
+import logo512 from '../components/logo512.png';
 import MapComponent from '../components/MapComponent.js';
+import TopBar from '../components/TopBar';
 
 const drawerWidth = 240;
-import TopBar from '../components/TopBar';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
