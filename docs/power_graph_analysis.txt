@@ -99,6 +99,16 @@ f(0) = E / 10.
 so we have:
 f(x, E) = (1/20 E) / (1 - b * sqrt(x)) - E/(-1 + b sqrt(x)).
 
+0 = (1/20 E) / (1 - b * sqrt(x)) - E/(-1 + b sqrt(x)).
+1 - b * sqrt(x)= (1/20 E) - E
+- b * sqrt(x)= (1/20 E) - E - 1
+
+b = (20 + 19 E)/(20 sqrt(x))
+
+a, b, c variables:
+a = 1/20 E,
+b = (20 + 19 E)/(20 sqrt(x)),
+c = -a/(-1 + b sqrt(x))
 
 
 
