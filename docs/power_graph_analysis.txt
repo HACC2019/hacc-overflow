@@ -54,3 +54,73 @@ j = -k/sqrt(d+c)
 f(x) = k/sqrt(x + c) + j
 
 
+### TAKE 2: 10 / 29 / 2019
+
+hypothesis: power is inversely proportional to the square root of time.
+- reasoning: A function of that form was found that fits the given power graph very well.
+
+function should be of the form:
+f(x) = a / (1 - b * sqrt(x)) + c, where m, n, and p are constants.
+
+
+
+found function that matches given graph (time is in hours):
+a = 115.19042
+b = sqrt(1 / 161.5824) = 0.078668881
+c = -78.18642
+
+approx interval of given graph : [0,  36.193]
+so Energy should be integral of above f(x) from 0 to 36.193
+from this we get: 363.691 kwM = 363.691 kwH / 60 = 6.06151666, which is very low but is
+within range with values from csv file.
+
+ASSUMPTIONS:
+    1 - peak of graph is at f(0).
+    2 - f goes to 0 at end of charge. that is, f(end time) = 0.
+
+    3 - peak of graph, is directly proportional to to total energy.
+
+    with this assumption, for the given graph, which has a peak 37.004 kW, the peak is 37.004 / 363.691 of the total
+    energy. this would give us peak ~ Energy / 10.
+
+under assumption 1:
+ 0  =  a / (1 - b * sqrt(x)) + c
+ -> c = -a/(-1 + b sqrt(x))
+
+so we have:
+f(x) = a / (1 - b * sqrt(x)) - a/(-1 + b sqrt(x))
+
+next under assumption 2:
+f(0) = E / 10.
+-> (E / 10) = a / (1 - b * sqrt(0)) - a/(-1 + b sqrt(0))
+-> (E / 10) = 2a.
+-> a = 1/20 E.
+
+so we have:
+f(x, E) = (1/20 E) / (1 - b * sqrt(x)) - E/(-1 + b sqrt(x)).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
