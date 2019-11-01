@@ -1,0 +1,8 @@
+Goal: given time and energy values, generate a function that simulates the power distributed with respect to time.
+
+We are given a sample graph that represents power (kW) with respect to time (minutes).
+We took this graph and used software tools to generate a function 
+
+
+
+
