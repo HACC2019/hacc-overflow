@@ -1,13 +1,11 @@
-from flask import Flask, request, render_template, jsonify, Response
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
 from flask_api.avg_duration.get_avg import get_avg_blueprint
 from flask_api.get_power import get_power_blueprint
-
 import geohash2
-
 # define app and allow CORS
-app = Flask(__name__, static_folder="client/build/static", template_folder="build")
+app = Flask(__name__)
 CORS(app)
 
 # register apis from modules
@@ -16,6 +14,7 @@ app.register_blueprint(get_power_blueprint, url_prefix="/api")
 
 app.config["REDIS_URL"] = "redis://redis:6379/0"
 redis_client = FlaskRedis(app)
+
 
 @app.route("/lookup", methods=["GET"])
 def lookup():
@@ -56,21 +55,6 @@ def lookups():
             lookup.decode("utf-8").split(":")[1]
         )
     return Response(response=output, mimetype="text/plain")
-
-
-@app.route("/api/hello", methods=["GET", "POST"])
-def hello():
-    try:
-        name = request.json["name"]
-    except KeyError:
-        name = "World"
-
-    return jsonify({"message": f"Hello, {name}!"}), 200
-
-
-@app.route("/")
-def client():
-    return render_template("index.html")
 
 
 if __name__ == "__main__":
