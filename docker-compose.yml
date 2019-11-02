@@ -45,7 +45,7 @@ services:
       context: .
       dockerfile: Dockerfile.ev_charger_simulator
     ports:
-    - "8000"
+      - "8000:8000"
     networks:
       - back-tier
     environment:
