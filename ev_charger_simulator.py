@@ -81,8 +81,6 @@ def process_request():
         info.info(
             {
                 "charger_name": f"Station {station}",
-                "latitude": str(latitude),
-                "longitude": str(longitude),
                 "geohash": geohash,
                 "session_id": poll[2],
             }

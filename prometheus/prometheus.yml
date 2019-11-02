@@ -15,9 +15,9 @@ scrape_configs:
          - targets: ['app:8000']
 
   - job_name: 'ev_charger'
-    static_configs:
-         - targets: 
-           - "ev_charger_a:8000"
-           - "ev_charger_b:8000"
-           - "ev_charger_c:8000" # this one is down for illustration
+    dns_sd_configs:
+    - names:
+      - 'ev_charger'
+      type: 'A'
+      port: 8000
 

@@ -29,7 +29,7 @@ services:
         #    networks:
         #      - back-tier
         #      - front-tier
-  ev_charger_a:
+  ev_charger:
     build:
       context: .
       dockerfile: Dockerfile.ev_charger_simulator
@@ -39,17 +39,6 @@ services:
       - back-tier
     environment:
       STATION: "A"
-
-  ev_charger_b:
-    build:
-      context: .
-      dockerfile: Dockerfile.ev_charger_simulator
-    ports:
-      - "8000"
-    networks:
-      - back-tier
-    environment:
-      STATION: "B"
 
   redis:
     image: redis:alpine
