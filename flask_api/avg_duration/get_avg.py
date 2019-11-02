@@ -19,10 +19,10 @@ for station_name, f_name in stations_to_avg_files:
         data = json.load(json_file)
         stations_to_avgs[station_name] = data
 
-avg_duration_api = Blueprint('getavg_api', __name__)
+get_avg_blueprint = Blueprint('getavg_api', __name__)
 
 
-@avg_duration_api.route('/avg-duration', methods=["GET"])
+@get_avg_blueprint.route('/avg-duration', methods=["GET"])
 def get_avg():
     """
     Returns average duration of a charge for a given hour and station.

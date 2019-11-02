@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
-from flask_api.avg_duration import get_avg
-from flask_api.get_power import get_power, get_power_blueprint
+from flask_api.avg_duration.get_avg import get_avg_blueprint
+from flask_api.get_power import get_power_blueprint
 
 import geohash2
 
@@ -11,7 +11,7 @@ app = Flask(__name__, static_folder="client/build/static", template_folder="buil
 CORS(app)
 
 # register apis from modules
-app.register_blueprint(get_avg.avg_duration_api, url_prefix="/api")
+app.register_blueprint(get_avg_blueprint, url_prefix="/api")
 app.register_blueprint(get_power_blueprint, url_prefix="/api")
 
 app.config["REDIS_URL"] = "redis://redis:6379/0"
