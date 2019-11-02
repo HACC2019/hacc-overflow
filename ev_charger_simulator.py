@@ -58,7 +58,8 @@ def process_request():
     now = now - dt.timedelta(
         minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond
     )
-    now = now.replace(month=random.randint(1, 8), year=2019)
+    random_month = random.randint(1, 8)
+    now = now.replace(month=random_month)
 
     i = 0
     for poll in polls:
@@ -68,6 +69,15 @@ def process_request():
         i += 1
 
     for poll in polls[i:]:
+        # sleep until the next poll is due or skip if poll is in the past
+        sleep_seconds = (
+            dt.datetime.strptime(poll[0], "%Y-%m-%d %H:%M:%S")
+            - dt.datetime.now().replace(month=random_month)
+        ).total_seconds()
+        if sleep_seconds > 0:
+            print(f"Gonna sleep for {sleep_seconds} seconds")
+            time.sleep(sleep_seconds)
+
         info.info(
             {
                 "charger_name": f"Station {station}",
@@ -86,7 +96,6 @@ def process_request():
         port_type.state(poll[3])
         payment_mode.state(poll[4])
         sys.stderr.write(str(poll) + "\n")
-        time.sleep(5 * 60)
 
 
 if __name__ == "__main__":

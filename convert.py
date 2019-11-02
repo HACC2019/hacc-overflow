@@ -1,6 +1,54 @@
 import csv
 import datetime as dt
 import json
+import numpy as np
+
+# a, b, c are constants used in power function
+b = np.float64("0.0786688810066")
+
+
+def get_power_func(energy, duration):
+    # given energy, and duration, generates power function.
+    # energy must be in kwM and duration must be in minutes, since function maps
+    # given HECO graph.
+    e = energy
+    t = duration
+
+    a_numerator = np.square(b) * e * (b * np.sqrt(t) + 1)
+    a_denominator = np.square(b) * t
+    a_denominator = a_denominator + 2 * b * np.sqrt(t)
+    a_denominator = a_denominator - 2 * b * np.sqrt(t) * np.log(b * np.sqrt(t) + 1)
+    a_denominator = a_denominator - 2 * np.log(b * np.sqrt(t) + 1)
+    a = np.divide(a_numerator, a_denominator)
+    c = np.divide(-a, 1 + b * np.sqrt(t))
+
+    def f(x):
+        if x >= t:
+            return 0.0  # function should always go to 0 after time t
+        return c + np.divide(a, 1 + b * np.sqrt(x))
+
+    return f
+
+
+def get_power(energy, duration, intervals):
+    if not duration or not energy or not intervals:
+        return {"error": "duration, energy, or intervals missing."}
+
+    try:
+        duration = np.double(duration)
+        duration = np.divide(duration, 60)  # found function is in minutes
+        energy = np.double(energy)
+        energy = energy * 60
+        intervals = int(intervals)
+    except ValueError:
+        return {"error": "given was unable to be casted to numbers."}
+
+    f = get_power_func(energy, duration)
+    interval_len = np.divide(duration, intervals)
+
+    power_by_interval = [f(i * interval_len) for i in range(intervals)]
+
+    return power_by_interval
 
 
 header = [
@@ -37,20 +85,34 @@ with open("Data_HACC.csv") as csv_file:
         start_mod = start - dt.timedelta(minutes=start.minute % 5, seconds=start.second)
 
         # fill gaps between events
-        while start_mod > polls[-1][0] + dt.timedelta(minutes=5):
-            polls.append([polls[-1][0] + dt.timedelta(minutes=5), "", "", "", "", 0.0])
-        duration = int((end - start_mod).total_seconds() / 60 / 5) + 1
+        while start_mod > polls[-1][0] + dt.timedelta(
+            minutes=5 - (polls[-1][0].minute % 5)
+        ):
+            polls.append(
+                [
+                    polls[-1][0] + dt.timedelta(minutes=5 - (polls[-1][0].minute % 5)),
+                    "",
+                    "",
+                    "",
+                    "",
+                    0.0,
+                ]
+            )
+        duration = int((end - start_mod).total_seconds() / 60)
+
+        power_by_interval = get_power(line["Energy(kWh)"], duration, duration)
         for i in range(0, duration):
             if line["Charge Station Name"] != station:
                 continue
+
             polls.append(
                 [
-                    start_mod + dt.timedelta(minutes=5 * i),
+                    start_mod + dt.timedelta(minutes=i),
                     line["Session Initiated By"],
                     line["Session Id"],
                     line["Port Type"],
                     line["Payment Mode"],
-                    float(line["Energy(kWh)"]) / duration,
+                    power_by_interval[i],
                 ]
             )
 
