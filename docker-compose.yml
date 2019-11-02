@@ -10,6 +10,30 @@ networks:
   back-tier:
 
 services:
+  nginx:
+    image: umputun/nginx-le:latest
+    hostname: nginx
+    restart: always
+    networks:
+      - back-tier
+
+    logging:
+      driver: json-file
+      options:
+          max-size: "10m"
+          max-file: "5"
+
+    volumes:
+        - ./nginx/ssl:/etc/nginx/ssl
+        - ./nginx/service.conf:/etc/nginx/service.conf
+    ports:
+        - "80:80"
+        - "443:443"
+    environment:
+        - TZ=America/Chicago
+        - LETSENCRYPT=true
+        - LE_EMAIL=mail@aparcar.org
+        - LE_FQDN=hacc.aparcar.org
   app:
     build:
       context: .
@@ -18,17 +42,6 @@ services:
       - "8000:8000"
     networks:
       - back-tier
-        #  caddy:
-        #    image: abiosoft/caddy
-        #    volumes:
-        #      - ./Caddyfile:/etc/Caddyfile"
-        #      - caddy_data:/root/.caddy
-        #    ports:
-        #      - "80:80"
-        #      - "433:433"
-        #    networks:
-        #      - back-tier
-        #      - front-tier
   ev_charger:
     build:
       context: .
@@ -71,7 +84,6 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
-
     env_file:
       - ./grafana/config.monitoring
       - ./grafana/admin.password
