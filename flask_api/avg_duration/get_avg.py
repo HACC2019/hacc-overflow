@@ -1,11 +1,14 @@
+import os
 import json
 from flask import request, jsonify, Blueprint
+
+script_dir = os.path.dirname(__file__)
 
 STATION_A = "station_a"
 STATION_B = "station_b"
 
-STATION_A_F_NAME = "flask_api/avg_duration/station_A_Averages.json"
-STATION_B_F_NAME = "flask_api/avg_duration/station_B_Averages.json"
+STATION_A_F_NAME = os.path.join(script_dir, "station_A_Averages.json")
+STATION_B_F_NAME = os.path.join(script_dir, "station_B_Averages.json")
 
 stations_to_avg_files = [(STATION_A, STATION_A_F_NAME), (STATION_B, STATION_B_F_NAME)]
 
