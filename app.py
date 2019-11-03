@@ -4,6 +4,8 @@ from flask_redis import FlaskRedis
 from flask_api.avg_duration.get_avg import get_avg_blueprint
 from flask_api.get_power import get_power_blueprint
 import geohash2
+import datetime
+
 # define app and allow CORS
 app = Flask(__name__)
 CORS(app)
@@ -41,7 +43,8 @@ def lookup():
         geohash = geohash2.encode(float(latitude), float(longitude))
 
     # add lookup to redis
-    redis_client.set(f"lookup:{geohash}", geohash, ex=(60 * 60 * 24))  # store
+    current_time = int(datetime.datetime.utcnow().timestamp())
+    redis_client.set(f"lookup:{geohash}:{current_time}", 1, ex=(60 * 60 * 24))  # store
     return jsonify({"message": "success"}), 200
 
 
@@ -50,9 +53,11 @@ def lookups():
     """Return stored EV charger lookups position in Prometheus readable format"""
     output = ""
     for lookup in redis_client.scan_iter("lookup:*"):
-        # TODO there should be a cleaner implementation
-        output += 'lookup{{geohash="{}"}} 2.0\n'.format(
-            lookup.decode("utf-8").split(":")[1]
+        print(lookup.decode())
+        _, geohash, timestamp = lookup.decode().split(":")
+        # geohash is shortened by 1 to sum up lookups at similar places
+        output += 'lookup{{geohash="{}", id="{}"}} 2.0\n'.format(
+            geohash[:-1], str(datetime.datetime.utcfromtimestamp(int(timestamp)))
         )
     return Response(response=output, mimetype="text/plain")
 
