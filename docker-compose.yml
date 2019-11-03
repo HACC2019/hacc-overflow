@@ -3,7 +3,6 @@ version: '3'
 volumes:
     prometheus_data: {}
     grafana_data: {}
-    caddy_data: {}
 
 networks:
   back-tier:
@@ -38,7 +37,7 @@ services:
       context: .
       dockerfile: Dockerfile.app
     ports:
-      - "8000:8000"
+      - 8000
     networks:
       - back-tier
   ev_charger:
@@ -82,7 +81,7 @@ services:
     depends_on:
       - prometheus
     ports:
-      - "127.0.0.1:3000:3000"
+      - 3000
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
