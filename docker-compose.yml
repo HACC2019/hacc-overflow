@@ -6,7 +6,6 @@ volumes:
     caddy_data: {}
 
 networks:
-  front-tier:
   back-tier:
 
 services:
@@ -47,7 +46,7 @@ services:
       context: .
       dockerfile: Dockerfile.ev_charger_simulator
     ports:
-    - "8000"
+    - 8000
     networks:
       - back-tier
     environment:
@@ -56,7 +55,7 @@ services:
   redis:
     image: redis:alpine
     ports:
-    - "6379"
+    - 6379
     networks:
       - back-tier
 
@@ -68,8 +67,11 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+      - '--web.external-url=https://hacc.aparcar.org/prometheus/'
+      - '--web.route-prefix=/'
+
     ports:
-      - 9090:9090
+      - 9090
     networks:
       - back-tier
     restart: always
