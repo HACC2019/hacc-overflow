@@ -47,6 +47,7 @@ session_initiated_by = Enum(
 )
 
 kwh = Gauge(f"{metrics_prefix}kwh", "Current kwh usage")
+session_id = Gauge(f"{metrics_prefix}session_id", "Current session ID")
 last_charge_seconds = Gauge(
     f"{metrics_prefix}last_charge", "UNIX timestamp of last use"
 )
@@ -78,13 +79,8 @@ def process_request():
             print(f"Gonna sleep for {sleep_seconds} seconds")
             time.sleep(sleep_seconds)
 
-        info.info(
-            {
-                "charger_name": f"Station {station}",
-                "geohash": geohash,
-                "session_id": poll[2],
-            }
-        )
+        info.info({"geohash": geohash, "id": f"Station {station}"})
+        session_id.set(int(poll[2] or 0))
         kwh.set(poll[5])
         # update the last_charge value if a charge is detected
         if poll[5] > 0:
