@@ -20,7 +20,7 @@
     {
       "datasource": null,
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 4,
         "x": 0,
         "y": 0
@@ -33,7 +33,7 @@
           ],
           "defaults": {
             "mappings": [],
-            "max": 100,
+            "max": 10000,
             "min": 0,
             "thresholds": [
               {
@@ -42,9 +42,10 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 8000
               }
-            ]
+            ],
+            "unit": "watt"
           },
           "override": {},
           "values": false
@@ -57,12 +58,13 @@
       "targets": [
         {
           "expr": "sum(evc_kwh)",
+          "instant": true,
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "current kwh",
+      "title": "Current total Watt",
       "type": "gauge"
     },
     {
@@ -84,9 +86,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 2,
-        "x": 4,
+        "x": 6,
         "y": 0
       },
       "id": 15,
@@ -149,34 +151,117 @@
       "valueName": "avg"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "format": "short",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 0
+      },
+      "id": 17,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(count by (session_id) (evc_meta_info{session_id!=\"\"}))",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Active Sessions",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "0",
+          "value": "null"
+        }
+      ],
+      "valueName": "first"
+    },
+    {
       "datasource": null,
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 8,
+        "h": 4,
+        "w": 5,
+        "x": 10,
         "y": 0
       },
       "id": 6,
       "options": {
-        "displayMode": "lcd",
+        "displayMode": "gradient",
         "fieldOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "defaults": {
             "mappings": [],
-            "max": 100,
+            "max": 1,
             "min": 0,
             "thresholds": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
-            ]
+            ],
+            "unit": "percentunit"
           },
           "override": {},
           "values": false
@@ -186,8 +271,9 @@
       "pluginVersion": "6.4.3",
       "targets": [
         {
-          "expr": "sum(evc_payment_method{evc_payment_method!=\"\"}) by (evc_payment_method)",
-          "legendFormat": "{{ payment_method }}",
+          "expr": "sum(sum_over_time(evc_payment_method{evc_payment_method!=\"\"}[24h])) by (evc_payment_method) / ignoring(evc_payment_method) group_left sum (sum_over_time(evc_payment_method[24h]))",
+          "instant": true,
+          "legendFormat": "{{ evc_payment_method }}",
           "refId": "A"
         }
       ],
@@ -199,32 +285,29 @@
     {
       "datasource": null,
       "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 14,
+        "h": 4,
+        "w": 5,
+        "x": 15,
         "y": 0
       },
       "id": 7,
       "options": {
-        "displayMode": "lcd",
+        "displayMode": "gradient",
         "fieldOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
           "defaults": {
             "mappings": [],
-            "max": 100,
+            "max": 1,
             "min": 0,
             "thresholds": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
-            ]
+            ],
+            "unit": "percentunit"
           },
           "override": {},
           "values": false
@@ -234,7 +317,7 @@
       "pluginVersion": "6.4.3",
       "targets": [
         {
-          "expr": "sum(evc_session_initiated_by{evc_session_initiated_by!=\"\"}) by (evc_session_initiated_by)",
+          "expr": "sum(sum_over_time(evc_session_initiated_by{evc_session_initiated_by!=\"\"}[24h])) by (evc_session_initiated_by) / ignoring(evc_session_initiated_by) group_left sum (sum_over_time(evc_session_initiated_by[24h]))",
           "instant": false,
           "legendFormat": "{{ evc_session_initiated_by }}",
           "refId": "A"
@@ -261,9 +344,9 @@
         "showDate": true
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 18,
+        "h": 4,
+        "w": 4,
+        "x": 20,
         "y": 0
       },
       "id": 9,
@@ -302,7 +385,7 @@
         "h": 5,
         "w": 12,
         "x": 0,
-        "y": 5
+        "y": 4
       },
       "id": 2,
       "legend": {
@@ -357,7 +440,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "watt",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -388,10 +471,10 @@
       "datasource": null,
       "fontSize": "100%",
       "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 12,
-        "y": 5
+        "h": 19,
+        "w": 4,
+        "x": 20,
+        "y": 4
       },
       "id": 11,
       "options": {},
@@ -484,10 +567,10 @@
       "decimals": 0,
       "esMetric": "Count",
       "gridPos": {
-        "h": 12,
-        "w": 24,
+        "h": 14,
+        "w": 20,
         "x": 0,
-        "y": 10
+        "y": 9
       },
       "hideEmpty": false,
       "hideZero": false,
@@ -504,7 +587,7 @@
       "stickyLabels": false,
       "tableQueryOptions": {
         "geohashField": "geohash",
-        "labelField": "",
+        "labelField": "charger_name",
         "latitudeField": "latitude",
         "longitudeField": "longitude",
         "metricField": "Value",
@@ -564,5 +647,5 @@
   "timezone": "",
   "title": "Overview",
   "uid": "1iX4RMAWk",
-  "version": 3
+  "version": 2
 }

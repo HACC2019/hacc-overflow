@@ -3,58 +3,58 @@ version: '3'
 volumes:
     prometheus_data: {}
     grafana_data: {}
-    caddy_data: {}
 
 networks:
-  front-tier:
   back-tier:
 
 services:
+  nginx:
+    image: umputun/nginx-le:latest
+    hostname: nginx
+    restart: always
+    networks:
+      - back-tier
+
+    logging:
+      driver: json-file
+      options:
+          max-size: "10m"
+          max-file: "5"
+
+    volumes:
+        - ./nginx/ssl:/etc/nginx/ssl
+        - ./nginx/service.conf:/etc/nginx/service.conf
+    ports:
+        - "80:80"
+        - "443:443"
+    environment:
+        - TZ=America/Chicago
+        - LETSENCRYPT=true
+        - LE_EMAIL=mail@aparcar.org
+        - LE_FQDN=hacc.aparcar.org
   app:
     build:
       context: .
       dockerfile: Dockerfile.app
     ports:
-      - "127.0.0.1:8000:8000"
+      - 8000
     networks:
       - back-tier
-        #  caddy:
-        #    image: abiosoft/caddy
-        #    volumes:
-        #      - ./Caddyfile:/etc/Caddyfile"
-        #      - caddy_data:/root/.caddy
-        #    ports:
-        #      - "80:80"
-        #      - "433:433"
-        #    networks:
-        #      - back-tier
-        #      - front-tier
-  ev_charger_a:
+  ev_charger:
     build:
       context: .
       dockerfile: Dockerfile.ev_charger_simulator
     ports:
-    - "8000"
+    - 8000
     networks:
       - back-tier
     environment:
       STATION: "A"
 
-  ev_charger_b:
-    build:
-      context: .
-      dockerfile: Dockerfile.ev_charger_simulator
-    ports:
-    - "8000"
-    networks:
-      - back-tier
-    environment:
-      STATION: "B"
-
   redis:
     image: redis:alpine
     ports:
-    - "6379"
+    - 6379
     networks:
       - back-tier
 
@@ -66,8 +66,11 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+      - '--web.external-url=https://hacc.aparcar.org/prometheus/'
+      - '--web.route-prefix=/'
+
     ports:
-      - 9090:9090
+      - 9090
     networks:
       - back-tier
     restart: always
@@ -78,11 +81,10 @@ services:
     depends_on:
       - prometheus
     ports:
-      - "127.0.0.1:3000:3000"
+      - 3000
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
-
     env_file:
       - ./grafana/config.monitoring
       - ./grafana/admin.password
