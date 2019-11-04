@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, Response
+import os
+from flask import Flask, request, render_template, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
 from flask_api.avg_duration.get_avg import get_avg_blueprint
@@ -6,8 +7,13 @@ from flask_api.get_power import get_power_blueprint
 import geohash2
 import datetime
 
+script_dir = os.path.dirname(__file__)
+template_folder = os.path.join(script_dir, "client")
+static_folder = os.path.join(template_folder, "client", "build", "static")
+
+
 # define app and allow CORS
-app = Flask(__name__)
+app = Flask(__name__, static_folder=static_folder, template_folder="build")
 CORS(app)
 
 # register apis from modules
@@ -60,6 +66,11 @@ def lookups():
             geohash[:-1], str(datetime.datetime.utcfromtimestamp(int(timestamp)))
         )
     return Response(response=output, mimetype="text/plain")
+
+
+@app.route("/")
+def client():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
