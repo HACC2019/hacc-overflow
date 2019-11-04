@@ -6,6 +6,7 @@
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.5.0",
+    "geolib": "^3.0.4",
     "leaflet": "^1.5.1",
     "leaflet-react": "^3.0.5",
     "react": "^16.11.0",

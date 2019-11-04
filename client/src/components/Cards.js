@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
   const classes = useStyles();
 
   return (
@@ -39,25 +39,27 @@ export default function SimpleCard() {
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1">
-                    Name of ChargeStation location
+                    {props.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
                     # of EV charge stations
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    Address of location
+                    {props.address}
                   </Typography>
                 </Grid >
                 <Grid item>
                   <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    open navigation to google maps
+                    <a href={props.url}>open navigation to google maps</a>
                   </Typography>
                 </Grid >
               </Grid >
               <Grid item>
                 <Typography variant="subtitle1">
-                  0.00 miles
+                  {props.distance} miles
                 </Typography >
+                {props.inUse ? <Typography variant="subtitle1">Station is in use.</Typography > :
+                <Typography variant="subtitle1">Station is not in use.</Typography >}
               </Grid >
             </Grid >
           </Grid >

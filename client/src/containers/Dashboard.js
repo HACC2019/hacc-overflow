@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,8 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import CardContainer from './CardContainer';
 import MapComponent from '../components/MapComponent.js';
 import TopBar from '../components/TopBar';
-
-
+import usePosition from '../hooks/usePosition.js';
+import { getPreciseDistance } from 'geolib';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,37 +38,47 @@ fixedHeight: {
 },
 }));
 
-const hecoStationLocations = [
+let hecoStationLocations = [
   {
       location: {latitude: 21.407750, longitude: -157.949610}, 
-      address: '98-1268 Kaahumanu St Pearl City, HI 96782'
+      address: '98-1268 Kaahumanu St Pearl City, HI 96782',
+      inUse: true
   }, 
   {
       location: {latitude: 21.318000, longitude: -157.869290},
-      address: '801 Dillingham Building Honolulu, HI 96817'
+      address: '801 Dillingham Building Honolulu, HI 96817',
+      inUse: false
   },
   {
       location: {latitude: 21.293830, longitude: -157.710410},
-      address: '515 Pepeekeo St Honolulu, HI 96825'
+      address: '515 Pepeekeo St Honolulu, HI 96825',
+      inUse: true
   },
   {
       location: {latitude: 21.436700, longitude: -157.826360},
-      address: '47-388 Hui Iwa Street Kaneohe, HI 96744'
+      address: '47-388 Hui Iwa Street Kaneohe, HI 96744',
+      inUse: true
   },
   {
       location: {latitude: 21.525810, longitude: -158.037780},
-      address: '64-1550 Kamehameha Hwy Wahiawa, HI 96786'
+      address: '64-1550 Kamehameha Hwy Wahiawa, HI 96786',
+      inUse: true
   },
   {
       location: {latitude: 21.589030, longitude: -158.103660},
-      address: '66-145 Kamehameha Highway Haleiwa, HI 96712'
+      address: '66-145 Kamehameha Highway Haleiwa, HI 96712',
+      inUse: false
   }
 ];
+function returnSortedStations(arr, loc){
+  return arr.sort((a, b) => (getPreciseDistance(loc,a.location,1) > getPreciseDistance(loc,b.location,1)) ? 1 : -1);
+}
+
 
 export default function Dashboard() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  let {latitude, longitude, error} = usePosition();
 
   return (
       <div className={classes.root}>
@@ -77,23 +87,24 @@ export default function Dashboard() {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography component="div" style={{ backgroundColor: '#ebf3fe', height: '100vh' }}>
+            {latitude!=null ? 
           <Container maxWidth="lg" className={classes.container}>
-          
               <Grid container spacing={2} justify="center" alignItems="center">
                 <Grid item xs={12} md={8} lg={9} >
                   <Paper className={'100vh'}>
-                    <MapComponent markers={hecoStationLocations} userLocation={{latitude: 21.407750, longitude: -157.949610}}/>
+                    <MapComponent markers={hecoStationLocations} userLocation={{latitude: latitude, longitude: longitude}}/>
                   </Paper>
                 </Grid>
                 {/* CardContainer*/}
                 <Grid item xs={12} md={8}>
                   <Paper className={fixedHeightPaper}>
-                    <CardContainer />
+                    <CardContainer cardArr={returnSortedStations(hecoStationLocations, {latitude: latitude, longitude: longitude})} userLocation={{latitude: latitude, longitude: longitude}}/>
                   </Paper>
                 </Grid>
               </Grid>
 
           </Container>
+            : <div>Can't Fetch Location</div>}
           </Typography>
 
         </main>
