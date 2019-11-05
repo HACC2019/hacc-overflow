@@ -12,7 +12,7 @@ from os import environ
 station = environ.get("STATION", "Hawaii Kai 7-Eleven")
 address = environ.get("ADDRESS", "515 Pepeekeo St Honolulu, HI 96825")
 location = environ.get("LOCATION", "21.29730/-157.70932").split("/")
-start_month = environ.get("START_MONTH", 1)
+start_month = int(environ.get("START_MONTH", 1))
 
 # what port to listen on
 port = environ.get("PORT", 8000)
