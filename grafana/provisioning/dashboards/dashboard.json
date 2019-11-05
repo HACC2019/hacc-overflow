@@ -425,7 +425,7 @@
       "targets": [
         {
           "expr": "evc_kwh",
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ station }}",
           "refId": "A"
         }
       ],
@@ -552,7 +552,7 @@
       "targets": [
         {
           "expr": "(time() - evc_last_charge)",
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ station }}",
           "refId": "A"
         }
       ],
@@ -608,7 +608,7 @@
     },
     {
       "circleMaxSize": "20",
-      "circleMinSize": "2",
+      "circleMinSize": "1",
       "colors": [
         "rgba(245, 54, 54, 0.9)",
         "#56A64B",
@@ -748,7 +748,7 @@
       "targets": [
         {
           "expr": "up{job=\"ev_charger\"}",
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ station }}",
           "refId": "A"
         }
       ],
@@ -787,5 +787,5 @@
   "timezone": "",
   "title": "Overview",
   "uid": "1iX4RMAWk",
-  "version": 8
+  "version": 9
 }
