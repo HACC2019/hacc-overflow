@@ -88,7 +88,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 3,
+        "x": 6,
         "y": 0
       },
       "id": 15,
@@ -172,7 +172,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 5,
+        "x": 8,
         "y": 0
       },
       "id": 17,
@@ -215,7 +215,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(evc_session_id!=0)",
+          "expr": "count(evc_session_id!=0 )",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -241,8 +241,8 @@
       "datasource": null,
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 7,
+        "w": 5,
+        "x": 10,
         "y": 0
       },
       "id": 6,
@@ -291,8 +291,8 @@
       "datasource": null,
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 11,
+        "w": 5,
+        "x": 15,
         "y": 0
       },
       "id": 7,
@@ -391,8 +391,8 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 20,
+        "h": 8,
+        "w": 13,
         "x": 0,
         "y": 4
       },
@@ -471,6 +471,201 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                54000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "30m",
+        "handler": 1,
+        "name": "Long time since last usage",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 13,
+        "y": 4
+      },
+      "id": 19,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(time() - evc_last_charge)",
+          "legendFormat": "{{ instance }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 54000,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Last usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": "172800",
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "circleMaxSize": "20",
+      "circleMinSize": "2",
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "#56A64B",
+        "#5794F2",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "datasource": null,
+      "decimals": 0,
+      "esMetric": "Count",
+      "gridPos": {
+        "h": 16,
+        "w": 20,
+        "x": 0,
+        "y": 12
+      },
+      "hideEmpty": false,
+      "hideZero": false,
+      "id": 13,
+      "initialZoom": "12",
+      "locationData": "table",
+      "mapCenter": "custom",
+      "mapCenterLatitude": "21.300672",
+      "mapCenterLongitude": "-157.851773",
+      "maxDataPoints": 1,
+      "mouseWheelZoom": false,
+      "options": {},
+      "showLegend": false,
+      "stickyLabels": false,
+      "tableQueryOptions": {
+        "geohashField": "geohash",
+        "labelField": "id",
+        "latitudeField": "latitude",
+        "longitudeField": "longitude",
+        "metricField": "Value",
+        "queryType": "geohash"
+      },
+      "targets": [
+        {
+          "expr": "sum(lookup) by (geohash) or evc_meta_info",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0,1,2",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Map",
+      "type": "grafana-worldmap-panel",
+      "unitPlural": "",
+      "unitSingle": "",
+      "unitSingular": "",
+      "valueName": "current"
+    },
+    {
       "columns": [
         {
           "text": "Current",
@@ -483,7 +678,7 @@
         "h": 18,
         "w": 4,
         "x": 20,
-        "y": 4
+        "y": 12
       },
       "id": 11,
       "options": {},
@@ -562,65 +757,6 @@
       "title": "Station Status",
       "transform": "timeseries_aggregations",
       "type": "table"
-    },
-    {
-      "circleMaxSize": "20",
-      "circleMinSize": "2",
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "#56A64B",
-        "#5794F2",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": null,
-      "decimals": 0,
-      "esMetric": "Count",
-      "gridPos": {
-        "h": 11,
-        "w": 20,
-        "x": 0,
-        "y": 11
-      },
-      "hideEmpty": false,
-      "hideZero": false,
-      "id": 13,
-      "initialZoom": "12",
-      "locationData": "table",
-      "mapCenter": "custom",
-      "mapCenterLatitude": "21.300672",
-      "mapCenterLongitude": "-157.851773",
-      "maxDataPoints": 1,
-      "mouseWheelZoom": false,
-      "options": {},
-      "showLegend": false,
-      "stickyLabels": false,
-      "tableQueryOptions": {
-        "geohashField": "geohash",
-        "labelField": "id",
-        "latitudeField": "latitude",
-        "longitudeField": "longitude",
-        "metricField": "Value",
-        "queryType": "geohash"
-      },
-      "targets": [
-        {
-          "expr": "sum(lookup) by (geohash) or evc_meta_info",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "0,1,2",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Map",
-      "type": "grafana-worldmap-panel",
-      "unitPlural": "",
-      "unitSingle": "",
-      "unitSingular": "",
-      "valueName": "current"
     }
   ],
   "refresh": "1m",

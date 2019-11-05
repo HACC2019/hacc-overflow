@@ -1,5 +1,4 @@
-from prometheus_client import start_http_server, Summary, Info, Gauge, Enum
-import random
+from prometheus_client import start_http_server, Info, Gauge, Enum
 import time
 import json
 import geohash2
@@ -10,19 +9,21 @@ from os import environ
 # these environment variables are setable in the docker-compose.yml
 
 # station name, a corresponding json file must exists
-station = environ.get("STATION", "A")
+station = environ.get("STATION", "Hawaii Kai 7-Eleven")
+address = environ.get("ADDRESS", "515 Pepeekeo St Honolulu, HI 96825")
+location = environ.get("LOCATION", "21.29730/-157.70932").split("/")
+start_month = environ.get("START_MONTH", 1)
 
 # what port to listen on
 port = environ.get("PORT", 8000)
 
 # position
-latitude = float(environ.get("LAT", 21.300672))
-longitude = float(environ.get("LONG", -157.851773))
+latitude = float(location[0])
+longitude = float(location[1])
 geohash = geohash2.encode(latitude, longitude)
 
-
 polls = []
-with open(f"polls_{station}.json") as polls_file:
+with open(f"polls_A.json") as polls_file:
     polls = json.load(polls_file)
 
 metrics_prefix = "evc_"  # electic vehicle charger
@@ -59,8 +60,7 @@ def process_request():
     now = now - dt.timedelta(
         minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond
     )
-    random_month = random.randint(1, 8)
-    now = now.replace(month=random_month)
+    now = now.replace(month=start_month)
 
     i = 0
     for poll in polls:
@@ -73,13 +73,21 @@ def process_request():
         # sleep until the next poll is due or skip if poll is in the past
         sleep_seconds = (
             dt.datetime.strptime(poll[0], "%Y-%m-%d %H:%M:%S")
-            - dt.datetime.now().replace(month=random_month)
+            - dt.datetime.now().replace(month=start_month)
         ).total_seconds()
         if sleep_seconds > 0:
             print(f"Gonna sleep for {sleep_seconds} seconds")
             time.sleep(sleep_seconds)
 
-        info.info({"geohash": geohash, "id": f"Station {station}"})
+        info.info(
+            {
+                "geohash": geohash,
+                "id": station,
+                "address": address,
+                "latitude": str(latitude),
+                "longitude": str(longitude),
+            }
+        )
         session_id.set(int(poll[2] or 0))
         kwh.set(poll[5])
         # update the last_charge value if a charge is detected

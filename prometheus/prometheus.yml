@@ -15,9 +15,19 @@ scrape_configs:
          - targets: ['app:8000']
 
   - job_name: 'ev_charger'
-    dns_sd_configs:
-    - names:
-      - 'ev_charger'
-      type: 'A'
-      port: 8000
-
+    static_configs:
+        - targets: ['ev_charger_1:8000']
+          labels:
+            station: "Hawaii Kai 7-Eleven"
+        - targets: ['ev_charger_2:8000']
+          labels:
+            station: "Hawaiian Electric Ward Office"
+        - targets: ['ev_charger_3:8000']
+          labels:
+            station: "Iwilei Costco Parking Lot"
+        - targets: ['ev_charger_4:8000']
+          labels:
+            station: "Times Square Shopping Center"
+        - targets: ['ev_charger_5:8000']
+          labels:
+            station: "Koolau Center"

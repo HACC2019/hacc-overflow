@@ -4,23 +4,11 @@ volumes:
     prometheus_data: {}
     grafana_data: {}
 
-networks:
-  back-tier:
-
 services:
   nginx:
     image: umputun/nginx-le:latest
     hostname: nginx
     restart: always
-    networks:
-      - back-tier
-
-    logging:
-      driver: json-file
-      options:
-          max-size: "10m"
-          max-file: "5"
-
     volumes:
         - ./nginx/ssl:/etc/nginx/ssl
         - ./nginx/service.conf:/etc/nginx/service.conf
@@ -38,25 +26,71 @@ services:
       dockerfile: Dockerfile.app
     ports:
       - 8000
-    networks:
-      - back-tier
-  ev_charger:
+
+  ev_charger_1:
     build:
       context: .
       dockerfile: Dockerfile.ev_charger_simulator
     ports:
     - 8000
-    networks:
-      - back-tier
     environment:
-      STATION: "A"
+        STATION: "Hawaii Kai 7-Eleven"
+        ADDRESS: "515 Pepeekeo St Honolulu, HI 96825"
+        LOCATION: "21.29730/-157.70932"
+        START_MONTH: 1
+
+  ev_charger_2:
+    build:
+      context: .
+      dockerfile: Dockerfile.ev_charger_simulator
+    ports:
+    - 8000
+    environment:
+        STATION: "Hawaiian Electric Ward Office"
+        ADDRESS: "820 Ward Avenue Honolulu, HI 96814"
+        LOCATION: "21.30569/-157.84872"
+        START_MONTH: 2
+
+  ev_charger_3:
+    build:
+      context: .
+      dockerfile: Dockerfile.ev_charger_simulator
+    ports:
+    - 8000
+    environment:
+        STATION: "Iwilei Costco Parking Lot"
+        ADDRESS: "801 Dillingham Building Honolulu, HI 96817"
+        LOCATION: "21.31866/-157.86713"
+        START_MONTH: 3
+
+  ev_charger_4:
+    build:
+      context: .
+      dockerfile: Dockerfile.ev_charger_simulator
+    ports:
+    - 8000
+    environment:
+        STATION: "Times Square Shopping Center"
+        ADDRESS: "98-1268 Kaahumanu St Pearl City, HI 96782"
+        LOCATION: "21.38714/-157.95443"
+        START_MONTH: 4
+
+  ev_charger_5:
+    build:
+      context: .
+      dockerfile: Dockerfile.ev_charger_simulator
+    ports:
+    - 8000
+    environment:
+        STATION: "Koolau Center"
+        ADDRESS: "47-388 Hui Iwa Street Kaneohe, HI 96744"
+        LOCATION: "21.38714/-157.95443"
+        START_MONTH: 5
 
   redis:
     image: redis:alpine
     ports:
     - 6379
-    networks:
-      - back-tier
 
   prometheus:
     image: prom/prometheus:latest
@@ -66,13 +100,9 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--web.external-url=https://hacc.aparcar.org/prometheus/'
-      - '--web.route-prefix=/'
 
     ports:
       - 9090
-    networks:
-      - back-tier
     restart: always
 
   grafana:
@@ -88,6 +118,4 @@ services:
     env_file:
       - ./grafana/config.monitoring
       - ./grafana/admin.password
-    networks:
-      - back-tier
     restart: always
