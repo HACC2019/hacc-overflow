@@ -7,8 +7,6 @@ volumes:
 networks:
   back-tier:
 
-
-
 services:
   nginx:
     image: umputun/nginx-le:latest
