@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, jsonify, Response
+from flask import Flask, request, send_from_directory, jsonify, Response
 from flask_cors import CORS
 from flask_redis import FlaskRedis
 from flask_api.avg_duration.get_avg import get_avg_blueprint
@@ -7,13 +7,10 @@ from flask_api.get_power import get_power_blueprint
 import geohash2
 import datetime
 
-script_dir = os.path.dirname(__file__)
-template_folder = os.path.join(script_dir, "client")
-static_folder = os.path.join(template_folder, "client", "build", "static")
 
 
 # define app and allow CORS
-app = Flask(__name__, static_folder=static_folder, template_folder="build")
+app = Flask(__name__, static_folder='client/build')
 CORS(app)
 
 # register apis from modules
@@ -68,9 +65,13 @@ def lookups():
     return Response(response=output, mimetype="text/plain")
 
 
-@app.route("/")
-def client():
-    return render_template("index.html")
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 
 if __name__ == "__main__":
