@@ -2,6 +2,8 @@ import React from 'react';
 import TempMapComponent from '../components/TempMapComponent';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
 
 const useStyles = makeStyles(theme => ({
 
@@ -31,8 +33,10 @@ export default function MainWrapper(props) {
     const classes = useStyles();
     return (
         <div>
-            <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
-            <TempMapComponent {...props.mapProps} classes={classes} />
+            <Container maxWidth="lg" className={classes.container}>
+                <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
+                <TempMapComponent {...props.mapProps} classes={classes} />
+            </Container>
         </div>
     )
 }

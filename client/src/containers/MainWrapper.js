@@ -21,7 +21,7 @@ export default function MainWrapper() {
     const handleGeocoderViewportChange = newViewport => {
         const geocoderDefaultOverrides = { transitionDuration: 1000 };
     
-        return this.handleViewportChange({
+        handleViewportChange({
           ...newViewport,
           ...geocoderDefaultOverrides
         });
@@ -43,7 +43,7 @@ export default function MainWrapper() {
                 latitude: event.result.geometry.latitude,
                 longitude: event.result.geometry.longitude
             }
-        )
+        );
     };
     const [viewport,setViewport] = useState({
         latitude: 21.30694,
