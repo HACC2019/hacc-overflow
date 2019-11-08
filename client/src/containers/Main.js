@@ -3,6 +3,7 @@ import TempMapComponent from '../components/TempMapComponent';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import TopBar from '../components/TopBar';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,8 +33,9 @@ const useStyles = makeStyles(theme => ({
 export default function MainWrapper(props) {
     const classes = useStyles();
     return (
-        <div>
+        <div className={classes.appBarSpacer}>
             <Container maxWidth="lg" className={classes.container}>
+                <TopBar />
                 <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
                 <TempMapComponent {...props.mapProps} classes={classes} />
             </Container>

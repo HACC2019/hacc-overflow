@@ -59,6 +59,7 @@ import MapGL, {Marker} from "react-map-gl";
 import DeckGL, { GeoJsonLayer } from "deck.gl";
 import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
+import { Button } from '@material-ui/core';
 
 // Please be a decent human and don't abuse my Mapbox API token.
 // If you fork this sandbox, replace my API token with your own.

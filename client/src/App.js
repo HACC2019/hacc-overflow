@@ -9,7 +9,6 @@ function App() {
   return (
       <div>
         <CssBaseline />
-        <TopBar />
         <MainWrapper />
       </div>
   );
