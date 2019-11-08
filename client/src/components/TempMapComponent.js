@@ -69,20 +69,15 @@ const MAPBOX_TOKEN =
 
 class TempMapComponent extends Component {
   state = {
-    viewport: {
-      latitude: 37.7577,
-      longitude: -122.4376,
-      zoom: 8
-    },
     searchResultLayer: null
   };
 
   mapRef = React.createRef();
 
   handleViewportChange = viewport => {
-    this.setState({
-      viewport: { ...this.state.viewport, ...viewport }
-    });
+    this.props.setViewport(
+      { ...this.state.viewport, ...viewport }
+    );
   };
 
   // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
@@ -107,6 +102,10 @@ class TempMapComponent extends Component {
         pointRadiusMaxPixels: 10
       })
     });
+    this.props.setPosition({
+      latitude: event.result.geometry.coordinates[1],
+      longitude: event.result.geometry.coordinates[0]
+    });
   };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
@@ -114,13 +113,13 @@ class TempMapComponent extends Component {
     </Marker>
   ));
   render() {
-    const { viewport, searchResultLayer } = this.state;
+    const {  searchResultLayer } = this.state;
 
     return (
       <div style={{height:'500px'}}>
         <MapGL
           ref={this.mapRef}
-          {...viewport}
+          {...this.props.viewport}
           width="100%"
           height="100%"
           onViewportChange={this.handleViewportChange}
@@ -134,7 +133,12 @@ class TempMapComponent extends Component {
             position="top-left"
           />
           {this.RenderMarkers}
-          <DeckGL {...viewport} layers={[searchResultLayer]} />
+          {this.props.position.latitude!=null ?
+          <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
+            <RoomIcon style={{color: '#FF0000'}}/>
+          </Marker> : <div></div>
+          }
+          <DeckGL {...this.props.viewport} layers={[searchResultLayer]} />
         </MapGL>
       </div>
     );
