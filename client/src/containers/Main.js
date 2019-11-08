@@ -30,12 +30,9 @@ const useStyles = makeStyles(theme => ({
 export default function MainWrapper(props) {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
-                <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
-                <TempMapComponent {...props.mapProps} classes={classes} />
-            </main>
+        <div>
+            <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
+            <TempMapComponent {...props.mapProps} classes={classes} />
         </div>
     )
 }

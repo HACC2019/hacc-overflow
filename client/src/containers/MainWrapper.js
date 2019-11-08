@@ -48,10 +48,12 @@ export default function MainWrapper() {
     const [viewport,setViewport] = useState({
         latitude: 21.30694,
         longitude: -157.85833,
-        zoom: 10.5
+        zoom: 10.5,
+        width: '100%',
+        height: 500
     });
     const [searchResultLayer, setSearchResultLayer] = useState({});
-    const mapProps = {position, setPosition, markers: TestHecoStations, handleViewportChange, handleGeocoderViewportChange, handleOnResult, searchResultLayer, setSearchResultLayer};
+    const mapProps = {position, setPosition, markers: TestHecoStations, handleViewportChange, handleGeocoderViewportChange, handleOnResult, searchResultLayer, setSearchResultLayer, viewport, setViewport};
     const buttonProps = {getUserLocation};
     return (
         <Main mapProps={mapProps} buttonProps={buttonProps} />
