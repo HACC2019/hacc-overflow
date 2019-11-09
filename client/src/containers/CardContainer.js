@@ -19,9 +19,6 @@ export default function SimpleContainer() {
           List of stations by distance(May either move to app bar, or remove appbar).
           Will add visibility filter to only show available
           <div>
-<<<<<<< Updated upstream
-            <Cards />
-=======
             <Switch
               checked={state.checkedA}
               onChange={handleChange('checkedA')}
@@ -44,7 +41,6 @@ export default function SimpleContainer() {
                 )
               ))
             }
->>>>>>> Stashed changes
           </div>
 
 

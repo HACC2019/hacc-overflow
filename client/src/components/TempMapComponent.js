@@ -109,7 +109,7 @@ class TempMapComponent extends Component {
   };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
-      <RoomIcon style={{color: '#4B0082'}}/>
+        <RoomIcon style={marker.inUse ? {color: '#CD0000'} : {color: '#008B00'}} onClick={() =>console.log('Heco Station')}/>
     </Marker>
   ));
   render() {
@@ -124,6 +124,7 @@ class TempMapComponent extends Component {
           height="100%"
           onViewportChange={this.handleViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
+          mapStyle='mapbox://styles/mapbox/streets-v11'
         >
           <Geocoder
             mapRef={this.mapRef}
@@ -134,11 +135,11 @@ class TempMapComponent extends Component {
           />
           {this.RenderMarkers}
           {this.props.position.latitude!=null ?
-          <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
-            <RoomIcon style={{color: '#FF0000'}}/>
+          <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} onClick={console.log('Heco Station')} offsetLeft={-20} offsetTop={-10}>
+            <RoomIcon style={{color: '#FF0000'}} onClick={()=>console.log('UserLocation')}/>
           </Marker> : <div></div>
           }
-          <DeckGL {...this.props.viewport} layers={[searchResultLayer]} />
+          {/*<DeckGL {...this.props.viewport} layers={[searchResultLayer]} />*/}
         </MapGL>
       </div>
     );

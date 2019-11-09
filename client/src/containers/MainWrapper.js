@@ -2,9 +2,18 @@ import React, { useState } from 'react';
 import TestHecoStations from '../TestHecoStations';
 import Main from './Main';
 import { GeoJsonLayer } from "deck.gl";
+import SingleCard from '../components/SingleCard';
+import CardContainer from '../containers/CardContainer';
 
 export default function MainWrapper() {
     const [position, setPosition] = useState({});
+    const [cardDrawer, setCardDrawer] = useState({
+        open: false, 
+        isSingleView: false, 
+        singleCard: null, 
+        cardList: null
+    });
+    const [searchResultLayer, setSearchResultLayer] = useState({});
     const getUserLocation = () => navigator.geolocation.getCurrentPosition((position) => {
         setPosition({
             latitude: position.coords.latitude,
@@ -15,9 +24,10 @@ export default function MainWrapper() {
             longitude: position.coords.longitude,
             zoom: 10.5
         });
-    });
-    
-      // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
+    }, 
+    (err) => console.warn(`ERROR(${err.code}): ${err.message}`),
+    {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
+    );
     
     const [viewport,setViewport] = useState({
         latitude: 21.30694,
@@ -26,10 +36,18 @@ export default function MainWrapper() {
         width: '100%',
         height: 500
     });
-    const [searchResultLayer, setSearchResultLayer] = useState({});
+    
     const mapProps = {position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport};
     const buttonProps = {getUserLocation};
+    function toBeRendered () {
+        if(cardDrawer.isSingleView){
+            return (<SingleCard/>);
+        } else {
+            return (<div/>);
+        }
+    }
+    const drawerProps = {cardDrawer, setCardDrawer, toBeRendered};
     return (
-        <Main mapProps={mapProps} buttonProps={buttonProps} />
+        <Main mapProps={mapProps} buttonProps={buttonProps} drawerProps={drawerProps}/>
     )
 }
