@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Cards from '../components/Cards';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-//import Container from '@material-ui/core/Container';
+import Switch from '@material-ui/core/Switch';
+import { getPreciseDistance } from 'geolib';
 
-export default function SimpleContainer() {
+export default function SimpleContainer(props){
+  const [state, setState] = React.useState({
+    checkedA: true,
+  });
 
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
   return (
       <React.Fragment>
       <CssBaseline />
@@ -34,7 +41,7 @@ export default function SimpleContainer() {
                 <Cards 
                   name='Name' 
                   address={i.address} 
-                  distance={(props.userLocation.latitude!=null)?((getPreciseDistance(props.userLocation, i.location, 1) * 0.00062137).toFixed(2)):'Distance not available'}
+                  distance=""
                   inUse={i.inUse}
                   url={'https://www.google.com/maps/search/?api=1&query=' + i.address}
                 />
@@ -44,15 +51,8 @@ export default function SimpleContainer() {
           </div>
 
 
-        </Typography>
-      </Grid>
-    {/*</Container> */}
-    </React.Fragment>
+          </Typography>
+        </Grid>
+      </React.Fragment>
   );
 }
-SimpleContainer.defaultProps = {
-  userLocation: {
-    latitude: null,
-    longitude: null,
-},
-};
