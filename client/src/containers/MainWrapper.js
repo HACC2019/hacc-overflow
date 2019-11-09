@@ -39,7 +39,7 @@ export default function MainWrapper() {
     
     const mapProps = {position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport, cardDrawer, setCardDrawer};
     const buttonProps = {getUserLocation};
-    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard/> : () => <CardContainer cardArr={cardDrawer.cardList}/>
+    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard}/> : () => <CardContainer cardArr={cardDrawer.cardList}/>
     const drawerProps = {cardDrawer, setCardDrawer, renderDrawerContent};
     return (
         <Main mapProps={mapProps} buttonProps={buttonProps} drawerProps={drawerProps}/>
