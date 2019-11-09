@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TopBar from '../components/TopBar';
-
+import CardDrawer from '../components/CardDrawer';
 
 const useStyles = makeStyles(theme => ({
 
@@ -33,9 +33,13 @@ const useStyles = makeStyles(theme => ({
 export default function MainWrapper(props) {
     const classes = useStyles();
     return (
+
         <div className={classes.appBarSpacer}>
+
             <Container maxWidth="lg" className={classes.container}>
+
                 <TopBar />
+                <CardDrawer />
                 <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
                 <TempMapComponent {...props.mapProps} classes={classes} />
             </Container>
