@@ -109,7 +109,7 @@ class TempMapComponent extends Component {
   };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
-        <RoomIcon style={marker.inUse ? {color: '#CD0000'} : {color: '#008B00'}} onClick={() =>console.log('Heco Station')}/>
+        <RoomIcon style={marker.inUse ? {color: '#CD0000'} : {color: '#008B00'}} onClick={() => setCardDrawer({singleCard: marker, open: true})}/>
     </Marker>
   ));
   render() {

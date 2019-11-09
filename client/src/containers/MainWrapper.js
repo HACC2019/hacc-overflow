@@ -37,16 +37,10 @@ export default function MainWrapper() {
         height: 500
     });
     
-    const mapProps = {position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport};
+    const mapProps = {position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport, cardDrawer, setCardDrawer};
     const buttonProps = {getUserLocation};
-    function toBeRendered () {
-        if(cardDrawer.isSingleView){
-            return (<SingleCard/>);
-        } else {
-            return (<div/>);
-        }
-    }
-    const drawerProps = {cardDrawer, setCardDrawer, toBeRendered};
+    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard/> : () => <CardContainer/>
+    const drawerProps = {cardDrawer, setCardDrawer, renderDrawerContent};
     return (
         <Main mapProps={mapProps} buttonProps={buttonProps} drawerProps={drawerProps}/>
     )

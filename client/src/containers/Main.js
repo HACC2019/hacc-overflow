@@ -39,7 +39,7 @@ export default function MainWrapper(props) {
             <Container maxWidth="lg" className={classes.container}>
 
                 <TopBar />
-                <CardDrawer />
+                <CardDrawer {...props.drawerProps}/>
                 <Button onClick={props.buttonProps.getUserLocation}>Use my Position</Button>
                 <TempMapComponent {...props.mapProps} classes={classes} />
             </Container>

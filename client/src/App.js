@@ -8,9 +8,8 @@ function App() {
 
   return (
       <div>
-        {/*<CssBaseline />
-        <MainWrapper />*/}
-        <SingleCard />
+        <CssBaseline />
+        <MainWrapper />
       </div>
   );
 
