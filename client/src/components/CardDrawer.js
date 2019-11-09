@@ -120,7 +120,7 @@ export default function PersistentDrawerLeft(props) {
             </IconButton>
           </div>
           <Divider />
-          {props.renderDrawer()}
+          {props.renderDrawerContent()}
         </Drawer>
 
       </div>
