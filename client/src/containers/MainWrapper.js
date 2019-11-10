@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import TestHecoStations from '../TestHecoStations';
+import React, { useState, useEffect } from 'react';
+import useStationsData from '../hooks/useStationsData';
 import Main from './Main';
 import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
@@ -11,13 +11,15 @@ import { Button } from "@material-ui/core";
 import TempMapComponent from "../components/TempMapComponent";
 import Container from "@material-ui/core/Container";
 
+
 export default function MainWrapper() {
+    const hecoStations = useStationsData();
     const [position, setPosition] = useState({});
     const [cardDrawer, setCardDrawer] = useState({
         open: false,
         isSingleView: false,
         singleCard: null,
-        cardList: TestHecoStations
+        cardList: []
     });
     const [searchResultLayer, setSearchResultLayer] = useState({});
     const [viewport, setViewport] = useState({
@@ -27,6 +29,11 @@ export default function MainWrapper() {
         width: '100%',
         height: 500
     });
+    useEffect(() => {
+        setCardDrawer({...cardDrawer, cardList: hecoStations});
+    },[hecoStations]);
+
+
     const returnDistanceInMiles = (end) => {
         if (position.latitude != null) {
             return (((getPreciseDistance(position, end, 1) * 0.000621371).toFixed(2)) + " Miles");
@@ -45,7 +52,7 @@ export default function MainWrapper() {
             open: true,
             isSingleView: false,
             cardList: returnSortedStations(
-                cardDrawer.cardList,
+                hecoStations,
                 {
                     latitude: event.result.geometry.coordinates[1],
                     longitude: event.result.geometry.coordinates[0]
@@ -66,7 +73,9 @@ export default function MainWrapper() {
         setCardDrawer({
             open: true,
             isSingleView: false,
-            cardList: returnSortedStations(TestHecoStations, {
+            cardList: returnSortedStations(
+                hecoStations, 
+            {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             })
@@ -90,7 +99,7 @@ export default function MainWrapper() {
             <TempMapComponent
                 position={position}
                 setPosition={setPosition}
-                markers={TestHecoStations}
+                markers={hecoStations}
                 searchResultLayer={searchResultLayer}
                 setSearchResultLayer={setSearchResultLayer}
                 classes={classes}

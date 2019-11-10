@@ -53,7 +53,7 @@ export default function SingleCard(props) {
 
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item >
-                    <img className={classes.image} src={ChargingStation_ward} alt="charge station picture"  />
+                    <img className={classes.image} src={ChargingStation_ward} alt="charge station picture" />
                   </Grid>
 
                   <Divider />

@@ -33,7 +33,7 @@ class TempMapComponent extends Component {
   };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
-        <RoomIcon style={marker.inUse ? {color: '#CD0000'} : {color: '#008B00'}} onClick={() => this.props.setCardDrawer({singleCard: marker, open: true, isSingleView: true})}/>
+        <RoomIcon style={marker.inUse == 0 ? {color: '#CD0000'} : (marker.inUse == 1 ? {color: '#FFD300'} : {color: '#008B00'})} onClick={() => this.props.setCardDrawer({singleCard: marker, open: true, isSingleView: true})}/>
     </Marker>
   ));
   render() {
@@ -61,8 +61,8 @@ class TempMapComponent extends Component {
           </Button>
           {this.RenderMarkers}
           {this.props.position.latitude!=null ?
-          <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} onClick={()=>console.log('My Location')} offsetLeft={-20} offsetTop={-10}>
-            <PersonPinCircleIcon/>
+          <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
+            <PersonPinCircleIcon style={{color:'#3F51B5'}}/>
           </Marker> : <div></div>
           }
         </MapGL>

@@ -34,7 +34,7 @@ export default function SimpleCard(props) {
         <CardContent>
           <Grid container spacing={2}>
             <Grid item>
-                <EvStationIcon  />
+                <EvStationIcon  style={props.inUse == 0 ? {color: '#CD0000'} : (props.inUse == 1 ? {color: '#FFD300'} : {color: '#008B00'})}/>
             </Grid >
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
