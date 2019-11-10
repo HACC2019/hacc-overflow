@@ -41,7 +41,7 @@ export default function SimpleContainer(props){
                 <Cards 
                   name='Name' 
                   address={i.address} 
-                  distance=""
+                  distance={props.getDistance(i.location)}
                   inUse={i.inUse}
                   url={'https://www.google.com/maps/search/?api=1&query=' + i.address}
                 />

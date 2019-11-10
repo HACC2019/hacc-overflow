@@ -7,12 +7,13 @@ import DeckGL, { GeoJsonLayer } from "deck.gl";
 import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
 import { Button } from '@material-ui/core';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
 // Please be a decent human and don't abuse my Mapbox API token.
 // If you fork this sandbox, replace my API token with your own.
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
 const MAPBOX_TOKEN =
-  "pk.eyJ1Ijoic21peWFrYXdhIiwiYSI6ImNqcGM0d3U4bTB6dWwzcW04ZHRsbHl0ZWoifQ.X9cvdajtPbs9JDMG-CMDsA";
+  "pk.eyJ1IjoibWF4ZGV5byIsImEiOiJjazJtZHFubnAwNDQxM25xbjg2YTc1dWs5In0.BBhi4RCBqtygGxYqzwFheQ";
 
 class TempMapComponent extends Component {
   state = {
@@ -53,6 +54,17 @@ class TempMapComponent extends Component {
       latitude: event.result.geometry.coordinates[1],
       longitude: event.result.geometry.coordinates[0]
     });
+    this.props.setCardDrawer({
+      open: true,
+      isSingleView: false,
+      cardList: this.props.returnSortedStations(
+        this.props.cardDrawer.cardList,
+        {
+          latitude: event.result.geometry.coordinates[1],
+          longitude: event.result.geometry.coordinates[0]
+        }
+      )
+    })
   };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
@@ -80,6 +92,9 @@ class TempMapComponent extends Component {
             mapboxApiAccessToken={MAPBOX_TOKEN}
             position="top-left"
           />
+          <Button onClick={this.props.getUserLocation} style={{position: 'absolute', top:0, right: 0, zIndex: 15}}>
+            <MyLocationIcon style={{width: 50, height: 50}}/>
+          </Button>
           {this.RenderMarkers}
           {this.props.position.latitude!=null ?
           <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} onClick={()=>console.log('My Location')} offsetLeft={-20} offsetTop={-10}>

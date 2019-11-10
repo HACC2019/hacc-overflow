@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import Grid from '@material-ui/core/Grid';
+import { propTypes } from 'react-map-gl-geocoder';
 
 
 const useStyles = makeStyles({
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
   const classes = useStyles();
 
   return (
@@ -56,7 +57,7 @@ export default function SimpleCard() {
               </Grid >
               <Grid item>
                 <Typography variant="subtitle1">
-                  0.00 miles
+                  {props.distance}
                 </Typography >
               </Grid >
             </Grid >
