@@ -6,14 +6,14 @@ import Switch from '@material-ui/core/Switch';
 
 const G_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=';
 
-function MultiCardContainer(props){
+function MultiCardContainer({stations, getDistance}){
   const [showUsedStations, setShowUsedStations] = useState(false);
 
   const flipSwitch = () => {
     setShowUsedStations(!showUsedStations);
   };
 
-  const stations = showUsedStations ? props.cardArr : props.cardArr.filter(stat => stat.inUse === false);
+  const shownStations = showUsedStations ? stations : stations.filter(stat => stat.inUse === false);
 
   return (
       <Grid container direction="column" justify="center" alignItems="center" >
@@ -32,11 +32,11 @@ function MultiCardContainer(props){
           </div>
           <div>
             {
-              stations.map(station => (
+              shownStations.map(station => (
                 <Card
                   name={station.name}
                   address={station.address}
-                  distance={props.getDistance(station.location)}
+                  distance={getDistance(station.location)}
                   inUse={station.inUse}
                   url={`${G_MAPS_URL}${station.address}`}
                 />

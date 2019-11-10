@@ -3,7 +3,7 @@ import TestHecoStations from '../TestHecoStations';
 import Main from './StationsFinder';
 import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
-import CardContainer from '../containers/CardContainer';
+import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
 import TopBar from "../components/TopBar";
 import CardDrawer from "../components/CardDrawer";
@@ -11,13 +11,19 @@ import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 
+
+/**
+ * Wrapper component for all station finder functionality.
+ * Contains all the state needed for such functionality.
+ * @param {Object}classes - classes used for styling
+ */
 function StationsFinder({classes}) {
     const [position, setPosition] = useState({});
     const [cardDrawer, setCardDrawer] = useState({
         open: false,
         isSingleView: false,
         singleCard: null,
-        cardList: TestHecoStations
+        stations: TestHecoStations
     });
     const [searchResultLayer, setSearchResultLayer] = useState({});
     const [viewport, setViewport] = useState({
@@ -32,10 +38,10 @@ function StationsFinder({classes}) {
             return (((getPreciseDistance(position, end, 1) * 0.000621371).toFixed(2)) + " Miles");
         }
         else return null;
-    }
+    };
     const returnSortedStations = (arr, loc) => {
         return arr.sort((a, b) => (getPreciseDistance(loc, a.location, 1) > getPreciseDistance(loc, b.location, 1)) ? 1 : -1);
-    }
+    };
     const handleSearch = event => {
         setPosition({
             latitude: event.result.geometry.coordinates[1],
@@ -44,8 +50,8 @@ function StationsFinder({classes}) {
         setCardDrawer({
             open: true,
             isSingleView: false,
-            cardList: returnSortedStations(
-                cardDrawer.cardList,
+            stations: returnSortedStations(
+                cardDrawer.stations,
                 {
                     latitude: event.result.geometry.coordinates[1],
                     longitude: event.result.geometry.coordinates[0]
@@ -66,7 +72,7 @@ function StationsFinder({classes}) {
         setCardDrawer({
             open: true,
             isSingleView: false,
-            cardList: returnSortedStations(TestHecoStations, {
+            stations: returnSortedStations(TestHecoStations, {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             })
@@ -76,10 +82,13 @@ function StationsFinder({classes}) {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
 
-    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard} returnDistanceInMiles={returnDistanceInMiles}/> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles} />
+    const renderDrawerContent = cardDrawer.isSingleView ?
+        () => <SingleCard {...cardDrawer.singleCard} returnDistanceInMiles={returnDistanceInMiles}/>
+        :
+        () => <MultiCardContainer stations={cardDrawer.stations} getDistance={returnDistanceInMiles} />;
 
     return (
-        <div>
+        <>
             <CardDrawer
                 cardDrawer={cardDrawer}
                 setCardDrawer={setCardDrawer}
@@ -100,7 +109,7 @@ function StationsFinder({classes}) {
                 getUserLocation={getUserLocation}
                 handleSearch={handleSearch}
             />
-        </div>
+        </>
     );
 }
 

@@ -1,5 +1,6 @@
 
-const URL = '/stations';
+const URL = 'https://hacc.aparcar.org/stations';
+
 const SUCCESS = 'success';
 
 const FETCH_ERR = new Error("Failed to fetch stations data");
