@@ -39,7 +39,7 @@ export default function SimpleContainer(props){
               props.cardArr.map(i => (
                 (state.checkedA === false && i.inUse) ? (<div></div>) : (
                 <Cards 
-                  name='Name' 
+                  name={i.name}
                   address={i.address} 
                   distance={props.getDistance(i.location)}
                   inUse={i.inUse}
