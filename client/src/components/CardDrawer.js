@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -97,16 +98,17 @@ export default function PersistentDrawerLeft(props) {
   return (
       <div className={classes.root}>
         <CssBaseline />
-        <IconButton
-
+        <Button
+            variant="contained"
+            color="primary"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
+            startIcon={<EvStationIcon />}
         >
-          <EvStationIcon/>
           Stations details
-        </IconButton>
+        </Button>
 
         <Drawer
             className={classes.drawer}
