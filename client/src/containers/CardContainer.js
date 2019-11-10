@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Cards from '../components/Cards';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-//import Container from '@material-ui/core/Container';
+import Switch from '@material-ui/core/Switch';
+import { getPreciseDistance } from 'geolib';
 
-export default function SimpleContainer() {
+export default function SimpleContainer(props){
+  const [state, setState] = React.useState({
+    checkedA: true,
+  });
 
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
   return (
       <React.Fragment>
       <CssBaseline />
@@ -19,13 +26,33 @@ export default function SimpleContainer() {
           List of stations by distance(May either move to app bar, or remove appbar).
           Will add visibility filter to only show available
           <div>
-            <Cards />
+            <Switch
+              checked={state.checkedA}
+              onChange={handleChange('checkedA')}
+              value="checkedA"
+              inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
+            <span>Display Stations in Use?</span>
+          </div>
+          <div>
+            {
+              props.cardArr.map(i => (
+                (state.checkedA === false && i.inUse) ? (<div></div>) : (
+                <Cards 
+                  name='Name' 
+                  address={i.address} 
+                  distance={props.getDistance(i.location)}
+                  inUse={i.inUse}
+                  url={'https://www.google.com/maps/search/?api=1&query=' + i.address}
+                />
+                )
+              ))
+            }
           </div>
 
 
-        </Typography>
-      </Grid>
-    {/*</Container> */}
-    </React.Fragment>
+          </Typography>
+        </Grid>
+      </React.Fragment>
   );
 }

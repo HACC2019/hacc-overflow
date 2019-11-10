@@ -11,6 +11,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles(theme => ({
+  appBarSpacer: theme.mixins.toolbar,
   root: {
     display: 'flex',
   },
@@ -86,7 +87,8 @@ export default function TopBar() {
   const classes = useStyles();
 
   return(
-      <AppBar position="absolute" className={clsx(classes.appBar)}>
+    <div>
+      <AppBar position="fixed" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard Mockup(normal user)
@@ -111,5 +113,7 @@ export default function TopBar() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <div className={classes.appBarSpacer} />
+      </div>
   );
 }
