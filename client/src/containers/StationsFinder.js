@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import TestHecoStations from '../TestHecoStations';
-import Main from './StationsFinder';
-import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
 import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
@@ -40,8 +38,11 @@ function StationsFinder({classes}) {
         else return null;
     };
     const returnSortedStations = (arr, loc) => {
-        return arr.sort((a, b) => (getPreciseDistance(loc, a.location, 1) > getPreciseDistance(loc, b.location, 1)) ? 1 : -1);
+        return arr.sort((a, b) => (
+            getPreciseDistance(loc, a.location, 1) > getPreciseDistance(loc, b.location, 1)) ? 1 : -1
+        );
     };
+
     const handleSearch = event => {
         setPosition({
             latitude: event.result.geometry.coordinates[1],
