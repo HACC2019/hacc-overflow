@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TestHecoStations from '../TestHecoStations';
-import Main from './Main';
+import Main from './StationsFinder';
 import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
 import CardContainer from '../containers/CardContainer';
@@ -8,10 +8,10 @@ import { getPreciseDistance } from 'geolib';
 import TopBar from "../components/TopBar";
 import CardDrawer from "../components/CardDrawer";
 import { Button } from "@material-ui/core";
-import TempMapComponent from "../components/TempMapComponent";
-import Container from "@material-ui/core/Container";
+import Map from "../components/Map";
+import withStyles from "../components/withStyles";
 
-export default function MainWrapper() {
+function StationsFinder({classes}) {
     const [position, setPosition] = useState({});
     const [cardDrawer, setCardDrawer] = useState({
         open: false,
@@ -78,16 +78,15 @@ export default function MainWrapper() {
 
     const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard} returnDistanceInMiles={returnDistanceInMiles}/> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles} />
 
-    const renderMainContent = (classes) => (
+    return (
         <div>
-            <TopBar />
             <CardDrawer
                 cardDrawer={cardDrawer}
                 setCardDrawer={setCardDrawer}
                 renderDrawerContent={renderDrawerContent}
             />
             <Button onClick={getUserLocation}>Use my Position</Button>
-            <TempMapComponent
+            <Map
                 position={position}
                 setPosition={setPosition}
                 markers={TestHecoStations}
@@ -103,8 +102,6 @@ export default function MainWrapper() {
             />
         </div>
     );
-
-    return (
-        <Main toRender={renderMainContent} />
-    )
 }
+
+export default withStyles(StationsFinder);
