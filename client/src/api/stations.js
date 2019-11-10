@@ -6,11 +6,12 @@ const FETCH_ERR = new Error("Failed to fetch stations data");
 const JSON_KEYS = {
     DATA: 'data',
     STATIONS_DATA: 'result',
+    STATIC_STATIONS_DATA: 'metric',
+    DYNAMIC_STATIONS_DATA: 'value',
     STATION_ID: 'station',
     ADDRESS: 'address',
     LATITUDE: 'latitude',
     LONGITUDE: 'longitude',
-    STATUS: 'status',
     STATION_STATUS_INDEX: 0,
     ETA_STATUS_INDEX: 1,
 };
@@ -37,7 +38,6 @@ async function stations() {
         throw(e);
     }
 }
-
 
 function normalizeStationsData(stationsData) {
     const stations = {};
