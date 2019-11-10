@@ -85,14 +85,12 @@ const useStyles = makeStyles(theme => ({
 export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
-    setOpen(true);
+    props.setCardDrawer({...props.cardDrawer, open: true});
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    props.setCardDrawer({...props.cardDrawer, open: false});
   };
 
   return (
@@ -104,7 +102,7 @@ export default function PersistentDrawerLeft(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, props.cardDrawer.open && classes.hide)}
             startIcon={<EvStationIcon />}
         >
           Stations details
@@ -114,7 +112,7 @@ export default function PersistentDrawerLeft(props) {
             className={classes.drawer}
             variant="persistent"
             anchor="left"
-            open={open}
+            open={props.cardDrawer.open}
             classes={{
               paper: classes.drawerPaper,
             }}

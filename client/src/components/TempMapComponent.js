@@ -9,22 +9,15 @@ import Geocoder from "react-map-gl-geocoder";
 import { Button } from '@material-ui/core';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 
-// Please be a decent human and don't abuse my Mapbox API token.
-// If you fork this sandbox, replace my API token with your own.
-// Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWF4ZGV5byIsImEiOiJjazJtZHFubnAwNDQxM25xbjg2YTc1dWs5In0.BBhi4RCBqtygGxYqzwFheQ";
 
 class TempMapComponent extends Component {
-  state = {
-    searchResultLayer: null
-  };
-
   mapRef = React.createRef();
 
   handleViewportChange = viewport => {
     this.props.setViewport(
-      { ...this.state.viewport, ...viewport }
+      { ...this.props.viewport, ...viewport }
     );
   };
 
@@ -37,42 +30,12 @@ class TempMapComponent extends Component {
       ...geocoderDefaultOverrides
     });
   };
-
-  handleOnResult = event => {
-    console.log(event.result);
-    this.setState({
-      searchResultLayer: new GeoJsonLayer({
-        id: "search-result",
-        data: event.result.geometry,
-        getFillColor: [255, 0, 0, 128],
-        getRadius: 1000,
-        pointRadiusMinPixels: 10,
-        pointRadiusMaxPixels: 10
-      })
-    });
-    this.props.setPosition({
-      latitude: event.result.geometry.coordinates[1],
-      longitude: event.result.geometry.coordinates[0]
-    });
-    this.props.setCardDrawer({
-      open: true,
-      isSingleView: false,
-      cardList: this.props.returnSortedStations(
-        this.props.cardDrawer.cardList,
-        {
-          latitude: event.result.geometry.coordinates[1],
-          longitude: event.result.geometry.coordinates[0]
-        }
-      )
-    })
-  };
   RenderMarkers = this.props.markers.map(marker => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10}>
         <RoomIcon style={marker.inUse ? {color: '#CD0000'} : {color: '#008B00'}} onClick={() => this.props.setCardDrawer({singleCard: marker, open: true, isSingleView: true})}/>
     </Marker>
   ));
   render() {
-    const {  searchResultLayer } = this.state;
 
     return (
       <div style={{height:'500px'}}>
@@ -87,7 +50,7 @@ class TempMapComponent extends Component {
         >
           <Geocoder
             mapRef={this.mapRef}
-            onResult={this.handleOnResult}
+            onResult={this.props.handleSearch}
             onViewportChange={this.handleGeocoderViewportChange}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             position="top-left"
@@ -101,7 +64,6 @@ class TempMapComponent extends Component {
             <RoomIcon style={{color: '#FF0000'}} onClick={()=>console.log('UserLocation')}/>
           </Marker> : <div></div>
           }
-          {/*<DeckGL {...this.props.viewport} layers={[searchResultLayer]} />*/}
         </MapGL>
       </div>
     );
