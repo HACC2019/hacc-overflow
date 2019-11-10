@@ -9,7 +9,8 @@ export default function MainWrapper() {
     const [position, setPosition] = useState({});
     const [cardDrawer, setCardDrawer] = useState({
         open: false, 
-        isSingleView: false, 
+        //isSingleView: false,
+        isSingleView: true,    //for testing SingleCard
         singleCard: null, 
         cardList: TestHecoStations
     });
