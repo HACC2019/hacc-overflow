@@ -61,11 +61,11 @@ export default function SingleCard(props) {
                   <Grid item xs>
                     <Typography className={classes.fonts} >
                       <Box fontWeight="fontWeightBold" >
-                      {stationName}
+                      {props.name}
                       </Box>
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {addrSample}
+                      {props.address}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightMedium" >
@@ -76,13 +76,13 @@ export default function SingleCard(props) {
 
                   <Grid item>
                     <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                      open navigation to google maps
+                      <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>open navigation to google maps</a>
                     </Typography>
                   </Grid>
 
                   <Grid item>
                     <Typography variant="subtitle1">
-                      0.00 miles
+                      {props.returnDistanceInMiles(props.location)}
                     </Typography>
                   </Grid>
                 </Grid>

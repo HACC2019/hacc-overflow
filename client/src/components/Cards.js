@@ -40,18 +40,18 @@ export default function SimpleCard(props) {
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1">
-                    Name of ChargeStation location
+                    {props.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
                     # of EV charge stations
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    Address of location
+                    {props.address}
                   </Typography>
                 </Grid >
                 <Grid item>
                   <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    open navigation to google maps
+                    <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>open navigation to google maps</a>
                   </Typography>
                 </Grid >
               </Grid >

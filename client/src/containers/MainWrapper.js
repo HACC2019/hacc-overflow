@@ -76,7 +76,7 @@ export default function MainWrapper() {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
 
-    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard} /> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles} />
+    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard} returnDistanceInMiles={returnDistanceInMiles}/> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles} />
 
     const renderMainContent = (classes) => (
         <div>
