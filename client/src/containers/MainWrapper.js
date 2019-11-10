@@ -4,6 +4,11 @@ import Main from './Main';
 import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
 import CardContainer from '../containers/CardContainer';
+import TopBar from "../components/TopBar";
+import CardDrawer from "../components/CardDrawer";
+import {Button} from "@material-ui/core";
+import TempMapComponent from "../components/TempMapComponent";
+import Container from "@material-ui/core/Container";
 
 export default function MainWrapper() {
     const [position, setPosition] = useState({});
@@ -38,11 +43,31 @@ export default function MainWrapper() {
         height: 500
     });
     
-    const mapProps = {position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport, cardDrawer, setCardDrawer};
-    const buttonProps = {getUserLocation};
     const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard}/> : () => <CardContainer cardArr={cardDrawer.cardList}/>
-    const drawerProps = {cardDrawer, setCardDrawer, renderDrawerContent};
+
+    const renderMainContent = (classes) => (
+        <div>
+            <TopBar />
+            <CardDrawer
+                cardDrawer={cardDrawer}
+                setCardDrawer={setCardDrawer}
+                renderDrawerContent={renderDrawerContent}
+            />
+            <Button onClick={getUserLocation}>Use my Position</Button>
+            <TempMapComponent
+                position={position}
+                setPosition={setPosition}
+                markers={TestHecoStations}
+                searchResultLayer={searchResultLayer}
+                setSearchResultLayer={setSearchResultLayer}
+                classes={classes}
+                viewport={viewport}
+                setViewport={setViewport}
+            />
+        </div>
+    );
+
     return (
-        <Main mapProps={mapProps} buttonProps={buttonProps} drawerProps={drawerProps}/>
+        <Main toRender={renderMainContent}/>
     )
 }
