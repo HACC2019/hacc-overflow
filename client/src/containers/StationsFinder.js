@@ -5,7 +5,6 @@ import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
 import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
-import TopBar from "../components/TopBar";
 import CardDrawer from "../components/CardDrawer";
 import { Button } from "@material-ui/core";
 import Map from "../components/Map";
@@ -19,12 +18,13 @@ import withStyles from "../components/withStyles";
  */
 function StationsFinder({classes}) {
     const [position, setPosition] = useState({});
-    const [cardDrawer, setCardDrawer] = useState({
+    const [drawerContent, setDrawerContent] = useState({
         open: false,
         isSingleView: false,
         singleCard: null,
         stations: TestHecoStations
     });
+
     const [searchResultLayer, setSearchResultLayer] = useState({});
     const [viewport, setViewport] = useState({
         latitude: 21.30694,
@@ -47,11 +47,11 @@ function StationsFinder({classes}) {
             latitude: event.result.geometry.coordinates[1],
             longitude: event.result.geometry.coordinates[0]
         });
-        setCardDrawer({
+        setDrawerContent({
             open: true,
             isSingleView: false,
             stations: returnSortedStations(
-                cardDrawer.stations,
+                drawerContent.stations,
                 {
                     latitude: event.result.geometry.coordinates[1],
                     longitude: event.result.geometry.coordinates[0]
@@ -69,7 +69,7 @@ function StationsFinder({classes}) {
             longitude: position.coords.longitude,
             zoom: 10.5
         });
-        setCardDrawer({
+        setDrawerContent({
             open: true,
             isSingleView: false,
             stations: returnSortedStations(TestHecoStations, {
@@ -82,16 +82,16 @@ function StationsFinder({classes}) {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
 
-    const renderDrawerContent = cardDrawer.isSingleView ?
-        () => <SingleCard {...cardDrawer.singleCard} returnDistanceInMiles={returnDistanceInMiles}/>
+    const renderDrawerContent = drawerContent.isSingleView ?
+        () => <SingleCard {...drawerContent.singleCard} returnDistanceInMiles={returnDistanceInMiles}/>
         :
-        () => <MultiCardContainer stations={cardDrawer.stations} getDistance={returnDistanceInMiles} />;
+        () => <MultiCardContainer stations={drawerContent.stations} getDistance={returnDistanceInMiles} />;
 
     return (
         <>
             <CardDrawer
-                cardDrawer={cardDrawer}
-                setCardDrawer={setCardDrawer}
+                cardDrawer={drawerContent}
+                setCardDrawer={setDrawerContent}
                 renderDrawerContent={renderDrawerContent}
             />
             <Button onClick={getUserLocation}>Use my Position</Button>
@@ -104,8 +104,8 @@ function StationsFinder({classes}) {
                 classes={classes}
                 viewport={viewport}
                 setViewport={setViewport}
-                cardDrawer={cardDrawer}
-                setCardDrawer={setCardDrawer}
+                cardDrawer={drawerContent}
+                setCardDrawer={setDrawerContent}
                 getUserLocation={getUserLocation}
                 handleSearch={handleSearch}
             />
