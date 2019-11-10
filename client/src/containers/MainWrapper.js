@@ -5,6 +5,11 @@ import { GeoJsonLayer } from "deck.gl";
 import SingleCard from '../components/SingleCard';
 import CardContainer from '../containers/CardContainer';
 import { getPreciseDistance } from 'geolib';
+import TopBar from "../components/TopBar";
+import CardDrawer from "../components/CardDrawer";
+import {Button} from "@material-ui/core";
+import TempMapComponent from "../components/TempMapComponent";
+import Container from "@material-ui/core/Container";
 
 export default function MainWrapper() {
     const [position, setPosition] = useState({});
@@ -54,12 +59,36 @@ export default function MainWrapper() {
         width: '100%',
         height: 500
     });
+    
+    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard}/> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles}/>
 
-    const mapProps = { position, setPosition, markers: TestHecoStations, searchResultLayer, setSearchResultLayer, viewport, setViewport, cardDrawer, setCardDrawer, returnSortedStations, getUserLocation};
-    const buttonProps = { getUserLocation };
-    const renderDrawerContent = cardDrawer.isSingleView ? () => <SingleCard {...cardDrawer.singleCard} /> : () => <CardContainer cardArr={cardDrawer.cardList} getDistance={returnDistanceInMiles} />
-    const drawerProps = { cardDrawer, setCardDrawer, renderDrawerContent };
+    const renderMainContent = (classes) => (
+        <div>
+            <TopBar />
+            <CardDrawer
+                cardDrawer={cardDrawer}
+                setCardDrawer={setCardDrawer}
+                renderDrawerContent={renderDrawerContent}
+            />
+            <Button onClick={getUserLocation}>Use my Position</Button>
+            <TempMapComponent
+                position={position}
+                setPosition={setPosition}
+                markers={TestHecoStations}
+                searchResultLayer={searchResultLayer}
+                setSearchResultLayer={setSearchResultLayer}
+                classes={classes}
+                viewport={viewport}
+                setViewport={setViewport}
+                cardDrawer={cardDrawer}
+                setCardDrawer={setCardDrawer}
+                returnSortedStations={returnSortedStations}
+                getUserLocation={getUserLocation}
+            />
+        </div>
+    );
+
     return (
-        <Main mapProps={mapProps} buttonProps={buttonProps} drawerProps={drawerProps} />
+        <Main toRender={renderMainContent}/>
     )
 }

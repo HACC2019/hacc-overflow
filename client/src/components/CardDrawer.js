@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import CardContainer from '../containers/CardContainer';
 import TestHecoStations from '../TestHecoStations';
+import EvStationIcon from '@material-ui/icons/EvStation';
 
 
 const drawerWidth = "300";
@@ -77,6 +78,7 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+
 }));
 
 export default function PersistentDrawerLeft(props) {
@@ -96,13 +98,14 @@ export default function PersistentDrawerLeft(props) {
       <div className={classes.root}>
         <CssBaseline />
         <IconButton
-            color="inherit"
+
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
         >
-          <MenuIcon />
+          <EvStationIcon/>
+          Stations details
         </IconButton>
 
         <Drawer
