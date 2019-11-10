@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import TestHecoStations from '../TestHecoStations';
+import React, {useEffect, useState} from 'react';
 import SingleCard from '../components/SingleCard';
 import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
@@ -7,6 +6,7 @@ import CardDrawer from "../components/CardDrawer";
 import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
+import useStationsData from "../hooks/useStationsData";
 
 
 /**
@@ -20,7 +20,7 @@ function StationsFinder({classes}) {
         open: false,
         isSingleView: false,
         singleCard: null,
-        stations: TestHecoStations
+        stations: []
     });
 
     const [searchResultLayer, setSearchResultLayer] = useState({});
@@ -31,6 +31,16 @@ function StationsFinder({classes}) {
         width: '100%',
         height: 500
     });
+
+    const stations = useStationsData();
+
+    useEffect(() => {
+        setDrawerContent({
+            ...drawerContent,
+            stations,
+        })
+    },[stations]);
+
     const returnDistanceInMiles = (end) => {
         if (position.latitude != null) {
             return (((getPreciseDistance(position, end, 1) * 0.000621371).toFixed(2)) + " Miles");
@@ -60,6 +70,7 @@ function StationsFinder({classes}) {
             )
         })
     };
+
     const getUserLocation = () => navigator.geolocation.getCurrentPosition((position) => {
         setPosition({
             latitude: position.coords.latitude,
@@ -73,7 +84,7 @@ function StationsFinder({classes}) {
         setDrawerContent({
             open: true,
             isSingleView: false,
-            stations: returnSortedStations(TestHecoStations, {
+            stations: returnSortedStations(stations, {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             })
@@ -99,7 +110,7 @@ function StationsFinder({classes}) {
             <Map
                 position={position}
                 setPosition={setPosition}
-                markers={TestHecoStations}
+                markers={stations}
                 searchResultLayer={searchResultLayer}
                 setSearchResultLayer={setSearchResultLayer}
                 classes={classes}
