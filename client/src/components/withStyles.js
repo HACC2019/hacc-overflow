@@ -26,13 +26,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function MainWrapper({toRender}) {
-    const classes = useStyles();
-    return (
-        <div className={classes.appBarSpacer}>
-            <Container maxWidth="lg" className={classes.container}>
-                {toRender()}
-            </Container>
-        </div>
-    )
+function withStyles(toRender) {
+    return () => {
+        const classes = useStyles();
+        return (
+            <div className={classes.appBarSpacer}>
+                <Container maxWidth="lg" className={classes.container}>
+                    {toRender({classes})}
+                </Container>
+            </div>
+        )
+    }
 }
+
+export default withStyles;

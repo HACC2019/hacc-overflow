@@ -3,22 +3,11 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import CardContainer from '../containers/CardContainer';
 import EvStationIcon from '@material-ui/icons/EvStation';
 
 
@@ -81,15 +70,15 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function PersistentDrawerLeft(props) {
+function CardDrawer({setCardDrawer, cardDrawer, renderDrawerContent}) {
   const classes = useStyles();
   const theme = useTheme();
   const handleDrawerOpen = () => {
-    props.setCardDrawer({...props.cardDrawer, open: true});
+    setCardDrawer({...cardDrawer, open: true});
   };
 
   const handleDrawerClose = () => {
-    props.setCardDrawer({...props.cardDrawer, open: false});
+    setCardDrawer({...cardDrawer, open: false});
   };
 
   return (
@@ -101,7 +90,7 @@ export default function PersistentDrawerLeft(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, props.cardDrawer.open && classes.hide)}
+            className={clsx(classes.menuButton, cardDrawer.open && classes.hide)}
             startIcon={<EvStationIcon />}
         >
           Stations details
@@ -111,7 +100,7 @@ export default function PersistentDrawerLeft(props) {
             className={classes.drawer}
             variant="persistent"
             anchor="left"
-            open={props.cardDrawer.open}
+            open={cardDrawer.open}
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -122,9 +111,11 @@ export default function PersistentDrawerLeft(props) {
             </IconButton>
           </div>
           <Divider />
-          {props.renderDrawerContent()}
+          {renderDrawerContent()}
         </Drawer>
 
       </div>
   );
 }
+
+export default CardDrawer;
