@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import Grid from '@material-ui/core/Grid';
-import { propTypes } from 'react-map-gl-geocoder';
 
 
 const useStyles = makeStyles({
@@ -27,14 +26,14 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-
+  let stationNum = 1;
   return (
       //Consider a CardAction button here to link to google map navigation
       <Card className={classes.card}>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item>
-                <EvStationIcon  style={props.inUse == 0 ? {color: '#CD0000'} : (props.inUse == 1 ? {color: '#FFD300'} : {color: '#008B00'})}/>
+                <EvStationIcon  style={props.stationColor}/>
             </Grid >
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
@@ -43,7 +42,7 @@ export default function SimpleCard(props) {
                     {props.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                    # of EV charge stations
+                    # of EV charge stations: {stationNum}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
                     {props.address}

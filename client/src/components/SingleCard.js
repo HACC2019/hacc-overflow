@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import ChargingStation_ward from './chargingStation_ward.jpg';
 import Box from '@material-ui/core/Box';
-
+import EvStationIcon from '@material-ui/icons/EvStation';
 
 const useStyles = makeStyles({
   card: {
@@ -69,6 +69,12 @@ export default function SingleCard(props) {
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightMedium" >
+                        <EvStationIcon style={props.returnStationStatus(props.inUse).color} />
+                        {props.returnStationStatus(props.inUse).status}
+                      </Box>
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      <Box fontWeight="fontWeightMedium" >
                       Stations Available: {stationNum} of {availNum}
                       </Box>
                     </Typography>
@@ -76,12 +82,13 @@ export default function SingleCard(props) {
 
                   <Grid item>
                     <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                      <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>open navigation to google maps</a>
+                      <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>Open navigation to google maps.</a>
                     </Typography>
                   </Grid>
 
                   <Grid item>
                     <Typography variant="subtitle1">
+                      {console.log(props.returnDistanceInMiles(props.location))}
                       {props.returnDistanceInMiles(props.location)}
                     </Typography>
                   </Grid>

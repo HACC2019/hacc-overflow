@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   hide: {
     display: 'none',

@@ -4,3 +4,5 @@ const STATION_STATUSES = {
     OK: 1,
     IN_USE: 2
 };
+
+export default STATION_STATUSES;

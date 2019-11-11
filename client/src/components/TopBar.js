@@ -1,14 +1,9 @@
 import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import logo512 from '../components/logo512.png';
 import AppBar from '@material-ui/core/AppBar';
 import clsx from 'clsx';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -45,6 +40,7 @@ const useStyles = makeStyles(theme => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+    backgroundColor: '#3B4985'
   },
   search: {
     position: 'relative',
@@ -90,7 +86,7 @@ export default function TopBar() {
     <div>
       <AppBar position="fixed" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography component="h1" variant="h6" color="inherit">
             Fast Charging Stations
           </Typography>
         </Toolbar>

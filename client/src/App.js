@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 function App() {
 
   return (
-      <div>
+      <div style={{backgroundColor: '#EBF3FE'}}>
         <CssBaseline />
           <TopBar />
           <StationsFinder />

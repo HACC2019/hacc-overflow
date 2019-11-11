@@ -7,8 +7,16 @@ import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
-import Footer from '../components/Footer';
 import lookup from "../api/lookup";
+import STATION_STATUSES from '../api/constants.js';
+import Typography from '@material-ui/core/Typography';
+
+const STATION_COLORS = {
+    red: '#CD0000',
+    yellow: '#FFD300',
+    green: '#008B00',
+    purple: '#8200cd'
+}
 
 /**
  * Wrapper component for all station finder functionality.
@@ -42,6 +50,31 @@ function StationsFinder({classes}) {
         })
     },[stations]);
 
+    const returnStationStatus = (status) => {
+        if(status === STATION_STATUSES.DOWN){
+            return {
+                color: {color: STATION_COLORS.red}, 
+                status: 'Station is currently down.'
+            };
+        }
+        else if(status === STATION_STATUSES.OK){
+            return {
+                color: {color: STATION_COLORS.green}, 
+                status: 'Station is currently available.'
+            };
+        }
+        else if(status === STATION_STATUSES.IN_USE){
+            return {
+                color: {color: STATION_COLORS.yellow}, 
+                status: 'Station is currently in use.'
+            };
+        } else {
+            return {
+                color: {color: STATION_COLORS.purple}, 
+                status: 'Station status is unknown.'
+            };
+        }
+    }
     const returnDistanceInMiles = (end) => {
         if (position.latitude != null) {
             return (((getPreciseDistance(position, end, 1) * 0.000621371).toFixed(2)) + " Miles");
@@ -100,18 +133,21 @@ function StationsFinder({classes}) {
     );
 
     const renderDrawerContent = drawerContent.isSingleView ?
-        () => <SingleCard {...drawerContent.singleCard} returnDistanceInMiles={returnDistanceInMiles}/>
+        () => <SingleCard {...drawerContent.singleCard} returnDistanceInMiles={returnDistanceInMiles} returnStationStatus={returnStationStatus}/>
         :
-        () => <MultiCardContainer stations={drawerContent.stations} getDistance={returnDistanceInMiles} />;
+        () => <MultiCardContainer stations={drawerContent.stations} getDistance={returnDistanceInMiles} returnStationStatus={returnStationStatus}/>;
 
     return (
         <>
+            <Typography variant="h5">The Hawaiian Electric Companies DC Fast Chargers</Typography>
+            <Typography variant="body2" gutterBottom>
+            To support clean transportation, the Hawaiian Electric Companies received approval from the Hawaii Public Utilities Commission to own and operate publicly accessible DC Fast Chargers across Oahu, Maui County, and Hawaii Island. Below are the locations where electric vehicle owners can quickly charge their vehicles.
+            </Typography>
             <CardDrawer
                 cardDrawer={drawerContent}
                 setCardDrawer={setDrawerContent}
                 renderDrawerContent={renderDrawerContent}
             />
-            <Button onClick={getUserLocation}>Use my Position</Button>
             <Map
                 position={position}
                 setPosition={setPosition}
@@ -125,8 +161,8 @@ function StationsFinder({classes}) {
                 setCardDrawer={setDrawerContent}
                 getUserLocation={getUserLocation}
                 handleSearch={handleSearch}
+                returnStationStatus={returnStationStatus}
             />
-            <Footer />
         </>
     );
 }
