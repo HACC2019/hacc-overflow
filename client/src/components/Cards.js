@@ -50,7 +50,7 @@ export default function SimpleCard(props) {
                 </Grid >
                 <Grid item>
                   <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>open navigation to google maps</a>
+                    <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>Open navigation to google maps.</a>
                   </Typography>
                 </Grid >
               </Grid >
