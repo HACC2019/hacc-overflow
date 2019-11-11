@@ -1,15 +1,15 @@
 import React from 'react';
-import MainWrapper from './containers/MainWrapper';
+import StationsFinder from './containers/StationsFinder';
 import TopBar from './components/TopBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import SingleCard from './components/SingleCard';
 
 function App() {
 
   return (
       <div>
         <CssBaseline />
-        <MainWrapper />
+          <TopBar />
+          <StationsFinder />
       </div>
   );
 
