@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import TestHecoStations from '../TestHecoStations';
-import Main from './StationsFinder';
-import { GeoJsonLayer } from "deck.gl";
+import React, {useEffect, useState} from 'react';
 import SingleCard from '../components/SingleCard';
 import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
@@ -19,12 +16,11 @@ import useStationsData from "../hooks/useStationsData";
  */
 function StationsFinder({classes}) {
     const [position, setPosition] = useState({});
-    const hecoStations = useStationsData();
     const [drawerContent, setDrawerContent] = useState({
         open: false,
         isSingleView: false,
         singleCard: null,
-        stations: hecoStations
+        stations: []
     });
 
     const [searchResultLayer, setSearchResultLayer] = useState({});
@@ -35,10 +31,15 @@ function StationsFinder({classes}) {
         width: '100%',
         height: 500
     });
-    useEffect(() => {
-        setDrawerContent({...drawerContent, cardList: hecoStations});
-    },[hecoStations]);
 
+    const stations = useStationsData();
+
+    useEffect(() => {
+        setDrawerContent({
+            ...drawerContent,
+            stations,
+        })
+    },[stations]);
 
     const returnDistanceInMiles = (end) => {
         if (position.latitude != null) {
@@ -47,8 +48,11 @@ function StationsFinder({classes}) {
         else return null;
     };
     const returnSortedStations = (arr, loc) => {
-        return arr.sort((a, b) => (getPreciseDistance(loc, a.location, 1) > getPreciseDistance(loc, b.location, 1)) ? 1 : -1);
+        return arr.sort((a, b) => (
+            getPreciseDistance(loc, a.location, 1) > getPreciseDistance(loc, b.location, 1)) ? 1 : -1
+        );
     };
+
     const handleSearch = event => {
         setPosition({
             latitude: event.result.geometry.coordinates[1],
@@ -66,6 +70,7 @@ function StationsFinder({classes}) {
             )
         })
     };
+
     const getUserLocation = () => navigator.geolocation.getCurrentPosition((position) => {
         setPosition({
             latitude: position.coords.latitude,
@@ -79,7 +84,7 @@ function StationsFinder({classes}) {
         setDrawerContent({
             open: true,
             isSingleView: false,
-            stations: returnSortedStations(hecoStations, {
+            stations: returnSortedStations(stations, {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             })
@@ -105,7 +110,7 @@ function StationsFinder({classes}) {
             <Map
                 position={position}
                 setPosition={setPosition}
-                markers={hecoStations}
+                markers={stations}
                 searchResultLayer={searchResultLayer}
                 setSearchResultLayer={setSearchResultLayer}
                 classes={classes}
