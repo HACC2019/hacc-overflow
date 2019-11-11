@@ -8,6 +8,7 @@ import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
 import lookup from "../api/lookup";
+import AddLocationIcon from "@material-ui/icons/AddLocation";
 
 /**
  * Wrapper component for all station finder functionality.
@@ -110,7 +111,14 @@ function StationsFinder({classes}) {
                 setCardDrawer={setDrawerContent}
                 renderDrawerContent={renderDrawerContent}
             />
-            <Button onClick={getUserLocation}>Use my Position</Button>
+            <Button
+                onClick={getUserLocation}
+                color="primary"
+                edge="start"
+                startIcon={<AddLocationIcon />}
+            >
+              Use my Position
+            </Button>
             <Map
                 position={position}
                 setPosition={setPosition}
