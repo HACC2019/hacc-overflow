@@ -97,8 +97,9 @@ function StationsFinder({classes}) {
         setDrawerContent({
             open: true,
             isSingleView: false,
+            singleCard: null,
             stations: returnSortedStations(
-                drawerContent.stations,
+                stations,
                 {
                     latitude: event.result.geometry.coordinates[1],
                     longitude: event.result.geometry.coordinates[0]
