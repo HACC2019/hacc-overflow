@@ -10,6 +10,7 @@ import CardDrawer from "../components/CardDrawer";
 import { Button } from "@material-ui/core";
 import TempMapComponent from "../components/TempMapComponent";
 import Container from "@material-ui/core/Container";
+import AddLocationIcon from "from "
 
 export default function MainWrapper() {
     const [position, setPosition] = useState({});
@@ -86,7 +87,16 @@ export default function MainWrapper() {
                 setCardDrawer={setCardDrawer}
                 renderDrawerContent={renderDrawerContent}
             />
-            <Button onClick={getUserLocation}>Use my Position</Button>
+            <Button
+                onClick={getUserLocation}
+                startIcon={<AddLocationIcon />}
+                color="primary"
+                edge="start"
+            >
+              Use my Position
+            </Button>
+
+
             <TempMapComponent
                 position={position}
                 setPosition={setPosition}
