@@ -2,7 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import React, { Component } from "react";
 import { render } from "react-dom";
-import MapGL, {Marker} from "react-map-gl";
+import MapGL, {Marker, NavigationControl } from "react-map-gl";
 import DeckGL, { GeoJsonLayer } from "deck.gl";
 import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
@@ -59,6 +59,9 @@ class Map extends Component {
           <Button onClick={this.props.getUserLocation} style={{position: 'absolute', top:0, right: 0, zIndex: 15}}>
             <MyLocationIcon style={{width: 50, height: 50}}/>
           </Button>
+          <div style={{position: 'absolute', bottom:0, right: 0}}>
+            <NavigationControl />
+          </div>
           {this.RenderMarkers}
           {this.props.position.latitude!=null ?
           <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} onClick={()=>console.log('My Location')} offsetLeft={-20} offsetTop={-10}>
