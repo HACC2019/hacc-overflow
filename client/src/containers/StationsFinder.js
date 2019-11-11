@@ -8,7 +8,7 @@ import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
 import Footer from '../components/Footer';
-
+import lookup from "../api/lookup";
 
 /**
  * Wrapper component for all station finder functionality.
@@ -55,6 +55,8 @@ function StationsFinder({classes}) {
     };
 
     const handleSearch = event => {
+        lookup(event.result.geometry.coordinates[1], event.result.geometry.coordinates[0])
+            .catch(() => console.log("lookup request failed"));
         setPosition({
             latitude: event.result.geometry.coordinates[1],
             longitude: event.result.geometry.coordinates[0]
@@ -73,6 +75,8 @@ function StationsFinder({classes}) {
     };
 
     const getUserLocation = () => navigator.geolocation.getCurrentPosition((position) => {
+        lookup(position.coords.latitude, position.coords.longitude)
+            .catch(() => console.log("lookup request failed"));
         setPosition({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
