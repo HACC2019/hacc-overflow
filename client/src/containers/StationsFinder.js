@@ -74,6 +74,8 @@ function StationsFinder({classes}) {
     };
 
     const getUserLocation = () => navigator.geolocation.getCurrentPosition((position) => {
+        lookup(position.coords.latitude, position.coords.longitude)
+            .catch(() => console.log("lookup request failed"));
         setPosition({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
