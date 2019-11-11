@@ -3,7 +3,6 @@ import SingleCard from '../components/SingleCard';
 import MultiCardContainer from './MultiCardContainer';
 import { getPreciseDistance } from 'geolib';
 import CardDrawer from "../components/CardDrawer";
-import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
