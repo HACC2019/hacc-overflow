@@ -1,7 +1,7 @@
-import TestHecoStations from '../TestHecoStations';
+import BaseHecoStations from '../BaseHecoStations';
 
 function useStationsData() {
-    return TestHecoStations;
+    return BaseHecoStations;
 }
 
 export default useStationsData;
