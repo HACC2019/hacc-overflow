@@ -7,6 +7,7 @@ import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
+import Footer from '../components/Footer';
 
 
 /**
@@ -121,6 +122,7 @@ function StationsFinder({classes}) {
                 getUserLocation={getUserLocation}
                 handleSearch={handleSearch}
             />
+            <Footer />
         </>
     );
 }
