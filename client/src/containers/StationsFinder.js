@@ -7,7 +7,7 @@ import { Button } from "@material-ui/core";
 import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
-
+import lookup from "../api/lookup";
 
 /**
  * Wrapper component for all station finder functionality.
@@ -54,6 +54,8 @@ function StationsFinder({classes}) {
     };
 
     const handleSearch = event => {
+        lookup(event.result.geometry.coordinates[1], event.result.geometry.coordinates[0])
+            .catch(() => console.log("lookup request failed"));
         setPosition({
             latitude: event.result.geometry.coordinates[1],
             longitude: event.result.geometry.coordinates[0]
