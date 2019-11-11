@@ -91,26 +91,8 @@ export default function TopBar() {
       <AppBar position="fixed" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard Mockup(normal user)
+            Fast Charging Stations
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <IconButton color="inherit">
-            <Avatar alt="hacc Logo" src={logo512} className={classes.avatar} />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <div className={classes.appBarSpacer} />

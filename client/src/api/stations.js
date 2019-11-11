@@ -1,23 +1,35 @@
 
-const URL = '/stations';
+const URL = 'https://hacc.aparcar.org/stations';
 const SUCCESS = 'success';
 
 const FETCH_ERR = new Error("Failed to fetch stations data");
 const JSON_KEYS = {
     DATA: 'data',
     STATIONS_DATA: 'result',
-    STATION_ID: 'station',
+    STATIC_STATIONS_DATA: 'metric',
+    DYNAMIC_STATIONS_DATA: 'value',
+    NAME: 'station',
     ADDRESS: 'address',
     LATITUDE: 'latitude',
     LONGITUDE: 'longitude',
-    STATUS: 'status',
     STATION_STATUS_INDEX: 0,
     ETA_STATUS_INDEX: 1,
 };
 
+/**
+ * Returns object containing stations indexed by
+ * the a given station's name.
+ *
+ * Station is normalized based on BaseHecoStations.js
+ *
+ * @returns {Promise<void>}
+ */
 async function stations() {
     try {
         const response = await fetch(URL);
+        if (!response.ok) {
+            throw new FETCH_ERR;
+        }
         const responseJson = await response.json();
 
         if (responseJson.status !== SUCCESS) {
@@ -38,27 +50,30 @@ async function stations() {
     }
 }
 
-
+/**
+ * Normalizes stations data to be formatted nicely.
+ * @param {Object} stationsData
+ */
 function normalizeStationsData(stationsData) {
     const stations = {};
 
     stationsData.forEach(station => {
-        const id = station[JSON_KEYS.STATION_ID];
+        const name = station[JSON_KEYS.NAME];
         const address = station[JSON_KEYS.ADDRESS];
         const latitude = station[JSON_KEYS.LATITUDE];
         const longitude = station[JSON_KEYS.LONGITUDE];
-        const status = station[JSON_KEYS.STATUS][JSON_KEYS.STATION_STATUS_INDEX];
-        const eta = station[JSON_KEYS.STATUS][JSON_KEYS.ETA_STATUS_INDEX];
+        const status_code = parseInt(station[JSON_KEYS.DYNAMIC_STATIONS_DATA][JSON_KEYS.STATION_STATUS_INDEX]);
+        const eta = station[JSON_KEYS.DYNAMIC_STATIONS_DATA][JSON_KEYS.ETA_STATUS_INDEX];
 
-        stations[id] = {
-            name: id,
+        stations[name] = {
+            name,
             address,
-            latitude,
-            longitude,
-            status,
-            eta,
+            location: {latitude, longitude},
+            status: status_code === STATION_STATUSES.UP && eta === 0 ? STATION_STATUSES.IN_USE : status_code,
+            eta, //todo: convert this into nice time format
         };
     });
+
     return stations;
 }
 

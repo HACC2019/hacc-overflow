@@ -8,11 +8,12 @@ import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
 import { Button } from '@material-ui/core';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWF4ZGV5byIsImEiOiJjazJtZHFubnAwNDQxM25xbjg2YTc1dWs5In0.BBhi4RCBqtygGxYqzwFheQ";
 
-class TempMapComponent extends Component {
+class Map extends Component {
   mapRef = React.createRef();
 
   handleViewportChange = viewport => {
@@ -61,7 +62,7 @@ class TempMapComponent extends Component {
           {this.RenderMarkers}
           {this.props.position.latitude!=null ?
           <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} onClick={()=>console.log('My Location')} offsetLeft={-20} offsetTop={-10}>
-            <RoomIcon style={{color: '#FF0000'}} onClick={()=>console.log('UserLocation')}/>
+            <PersonPinCircleIcon/>
           </Marker> : <div></div>
           }
         </MapGL>
@@ -69,4 +70,4 @@ class TempMapComponent extends Component {
     );
   }
 }
-export default TempMapComponent;
+export default Map;
