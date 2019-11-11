@@ -1,7 +1,7 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import React, { Component } from "react";
-import MapGL, { Marker } from "react-map-gl";
+import MapGL, {Marker, NavigationControl } from "react-map-gl";
 import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
 import { Fab } from '@material-ui/core';
@@ -62,6 +62,9 @@ class Map extends Component {
           >
             <MyLocationIcon />
           </Fab>
+          <div style={{position: 'absolute', bottom:40, right: 5}}>
+            <NavigationControl />
+          </div>
           {this.RenderMarkers}
           {this.props.position.latitude != null ?
             <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
