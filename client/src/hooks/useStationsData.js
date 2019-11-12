@@ -18,15 +18,6 @@ function useStationsData() {
             () => {
                 getStationsData().then(stationsData => {
                     const normalizedStations = normalizeStations(stations);
-
-                    console.log("Normalized stations");
-                    console.log(normalizedStations);
-
-                    console.log("new stations");
-                    console.log(stationsData);
-
-
-
                     Object.keys(stationsData).forEach(stationName => {
                        if (normalizedStations[stationName] === undefined) {
                            normalizedStations[stationName] = stationsData[stationName];
