@@ -68,7 +68,7 @@ class Map extends Component {
           {this.RenderMarkers}
           {this.props.position.latitude != null ?
             <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
-              <PersonPinCircleIcon style={{ color: '#3F51B5' }} />
+              <PersonPinCircleIcon style={{ color: '#3F51B5' }} fontSize="large" />
             </Marker> : <div></div>
           }
         </MapGL>
