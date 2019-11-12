@@ -31,7 +31,7 @@ class Map extends Component {
   };
   RenderMarkers = this.props.markers.map((marker,index) => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10} key={index}>
-      <RoomIcon style={this.props.returnStationStatus(marker.inUse).color} onClick={() => this.props.setCardDrawer({ singleCard: marker, open: true, isSingleView: true })} />
+      <RoomIcon style={this.props.returnStationStatus(marker.inUse).color} fontSize="large" onClick={() => this.props.setCardDrawer({ singleCard: marker, open: true, isSingleView: true })} />
     </Marker>
   ));
   render() {
