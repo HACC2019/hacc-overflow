@@ -16,7 +16,7 @@ const STATION_COLORS = {
     yellow: '#FFD300',
     green: '#008B00',
     purple: '#8200cd'
-}
+};
 
 /**
  * Wrapper component for all station finder functionality.
@@ -34,9 +34,9 @@ function StationsFinder({classes}) {
 
     const [searchResultLayer, setSearchResultLayer] = useState({});
     const [viewport, setViewport] = useState({
-        latitude: 21.30694,
-        longitude: -157.85833,
-        zoom: 10.5,
+        latitude: 21.4389,
+        longitude: -158.0001,
+        zoom: 9,
         width: '100%',
         height: 500
     });

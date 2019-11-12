@@ -65,7 +65,7 @@ function CardDrawer({setCardDrawer, cardDrawer, renderDrawerContent}) {
   };
 
   const handleDrawerClose = () => {
-    setCardDrawer({...cardDrawer, open: false});
+    setCardDrawer({...cardDrawer, isSingleView: false, open: false});
   };
 
   return (
