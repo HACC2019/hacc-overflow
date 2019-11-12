@@ -4,9 +4,10 @@ import React, { Component } from "react";
 import MapGL, {Marker, NavigationControl } from "react-map-gl";
 import RoomIcon from '@material-ui/icons/Room';
 import Geocoder from "react-map-gl-geocoder";
-import { Fab } from '@material-ui/core';
+import {Fab, Paper} from '@material-ui/core';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
+import MapLegend from "./MapLegend";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWF4ZGV5byIsImEiOiJjazJtZHFubnAwNDQxM25xbjg2YTc1dWs5In0.BBhi4RCBqtygGxYqzwFheQ";
@@ -31,7 +32,12 @@ class Map extends Component {
   };
   RenderMarkers = this.props.markers.map((marker,index) => (
     <Marker latitude={marker.location.latitude} longitude={marker.location.longitude} offsetLeft={-20} offsetTop={-10} key={index}>
-      <RoomIcon style={this.props.returnStationStatus(marker.inUse).color} fontSize="large" onClick={() => this.props.setCardDrawer({ singleCard: marker, open: true, isSingleView: true })} />
+      <RoomIcon
+          style={this.props.returnStationStatus(marker.inUse).color}
+          fontSize="large"
+          onClick={() => {
+            this.props.setCardDrawer({ ...this.props.cardDrawer, singleCard: marker, open: true, isSingleView: true })}
+          } />
     </Marker>
   ));
   render() {
@@ -65,15 +71,17 @@ class Map extends Component {
           <div style={{position: 'absolute', bottom:40, right: 5}}>
             <NavigationControl />
           </div>
+          <MapLegend classes={this.props.classes}/>
           {this.RenderMarkers}
           {this.props.position.latitude != null ?
             <Marker latitude={this.props.position.latitude} longitude={this.props.position.longitude} offsetLeft={-20} offsetTop={-10}>
               <PersonPinCircleIcon style={{ color: '#3F51B5' }} />
-            </Marker> : <div></div>
+            </Marker> : null
           }
         </MapGL>
       </div>
     );
   }
 }
+
 export default Map;

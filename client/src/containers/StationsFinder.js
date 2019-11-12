@@ -10,13 +10,7 @@ import lookup from "../api/lookup";
 import STATION_STATUSES from '../api/constants.js';
 import Typography from '@material-ui/core/Typography';
 import {Paper} from "@material-ui/core";
-
-const STATION_COLORS = {
-    red: '#CD0000',
-    yellow: '#FFD300',
-    green: '#008B00',
-    purple: '#8200cd'
-};
+import {STATION_STATUS_COLORS} from "../constants";
 
 /**
  * Wrapper component for all station finder functionality.
@@ -50,27 +44,29 @@ function StationsFinder({classes}) {
         })
     },[stations]);
 
+    console.log(drawerContent);
+
     const returnStationStatus = (status) => {
         if(status === STATION_STATUSES.DOWN){
             return {
-                color: {color: STATION_COLORS.red}, 
+                color: {color: STATION_STATUS_COLORS.NOT_AVAILABLE},
                 status: 'Station is currently down.'
             };
         }
         else if(status === STATION_STATUSES.OK){
             return {
-                color: {color: STATION_COLORS.green}, 
+                color: {color: STATION_STATUS_COLORS.AVAILABLE},
                 status: 'Station is currently available.'
             };
         }
         else if(status === STATION_STATUSES.IN_USE){
             return {
-                color: {color: STATION_COLORS.yellow}, 
+                color: {color: STATION_STATUS_COLORS.IN_USE},
                 status: 'Station is currently in use.'
             };
         } else {
             return {
-                color: {color: STATION_COLORS.purple}, 
+                color: {color: STATION_STATUS_COLORS.UNKNOWN},
                 status: 'Station status is unknown.'
             };
         }

@@ -5,7 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import Grid from '@material-ui/core/Grid';
-
+import Tooltip from "react-leaflet/lib/Tooltip";
+import Fab from "@material-ui/core/Fab";
+import googleMapsLogo from './gmaps.png';
 
 const useStyles = makeStyles({
   card: {
@@ -24,9 +26,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard(props) {
+export default function MultiCard(props) {
   const classes = useStyles();
-  let stationNum = 1;
+  const stationNum = 1;
   return (
       //Consider a CardAction button here to link to google map navigation
       <Card className={classes.card}>
@@ -48,10 +50,15 @@ export default function SimpleCard(props) {
                     {props.address}
                   </Typography>
                 </Grid >
-                <Grid item>
-                  <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>Open navigation to google maps.</a>
-                  </Typography>
+                <Grid item gutterRight>
+                  <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>
+                  <img
+                      src={googleMapsLogo}
+                      alt={"To Google Maps"}
+                      style={{width: "30px", float: "right"}}
+                      title={"To Google Maps"}
+                  />
+                  </a>
                 </Grid >
               </Grid >
               <Grid item>

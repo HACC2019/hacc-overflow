@@ -35,7 +35,28 @@ const useStyles = makeStyles(theme => ({
         paddingTop: "20px",
         paddingLeft: "20px",
         paddingRight: "20px",
-    }
+    },
+    mapLegendWrapper: {
+        padding: "7px",
+    },
+    mapLegendDot: {
+        height: "12px",
+        width: "12px",
+        backgroundColor: "green",
+        borderRadius: "50%",
+        display: "inline-block",
+    },
+    mapLegendText: {
+        display: "inline-block",
+        padding: ".5px",
+        paddingLeft: "5px",
+        margin: "0px",
+        fontSize: "12px",
+    },
+    mapLegendHeader: {
+        padding: ".5px",
+        margin: "0px",
+    },
 }));
 
 function withStyles(toRender) {

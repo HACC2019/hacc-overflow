@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import EvStationIcon from '@material-ui/icons/EvStation';
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 
 const drawerWidth = "300";
@@ -100,7 +102,6 @@ function CardDrawer({setCardDrawer, cardDrawer, renderDrawerContent}) {
           <Divider />
           {renderDrawerContent()}
         </Drawer>
-
       </div>
   );
 }

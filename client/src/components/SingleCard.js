@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import ChargingStation_ward from './chargingStation_ward.jpg';
 import Box from '@material-ui/core/Box';
 import EvStationIcon from '@material-ui/icons/EvStation';
+import googleMapsLogo from "./gmaps.png";
 
 const useStyles = makeStyles({
   card: {
@@ -40,10 +41,8 @@ const useStyles = makeStyles({
 
 export default function SingleCard(props) {
   const classes = useStyles();
-  const addrSample = "820 Ward Avenue, Honolulu, HI 96814";
-  const stationName ="Times Square Shopping Center\n";
-  var stationNum = 1;
-  var availNum = 1;
+  const stationNum = 1;
+  const availNum = 1;
     return (
         //Consider a CardAction button here to link to google map navigation
 
@@ -81,10 +80,16 @@ export default function SingleCard(props) {
                   </Grid>
 
                   <Grid item>
-                    <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                      <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>Open navigation to google maps.</a>
-                    </Typography>
-                  </Grid>
+                    <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>
+                      <img
+                          src={googleMapsLogo}
+                          alt={"To Google Maps"}
+                          style={{width: "30px", float: "right"}}
+                          title={"To Google Maps"}
+                      />
+                    </a>
+                  </Grid >
+
 
                   <Grid item>
                     <Typography variant="subtitle1">

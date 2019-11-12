@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Card from '../components/Cards';
+import Card from '../components/MultiCard';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
