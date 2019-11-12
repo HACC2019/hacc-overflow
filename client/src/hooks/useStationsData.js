@@ -26,7 +26,7 @@ function useStationsData() {
                     setStations(Object.values(normalizedStations));
                 }).catch(() => {});
             },
-            5000);
+            30000);
         setIntervalObj(intervalObj);
         return () => {clearInterval(intervalObj)};
     },[]);
