@@ -7,7 +7,7 @@ function App() {
 
   return (
       <div style={{backgroundColor: '#EBF3FE'}}>
-        <CssBaseline />
+          <CssBaseline />
           <TopBar />
           <StationsFinder />
       </div>
