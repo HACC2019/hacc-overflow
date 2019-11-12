@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import ChargingStation_ward from './chargingStation_ward.jpg';
 import Box from '@material-ui/core/Box';
 import EvStationIcon from '@material-ui/icons/EvStation';
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles({
   card: {
@@ -35,7 +37,10 @@ const useStyles = makeStyles({
   fonts: {
     fontWeight: "fontWeightBold",
 
-  }
+  },
+  button: {
+    margin: 1,
+  },
 });
 
 export default function SingleCard(props) {
@@ -49,24 +54,23 @@ export default function SingleCard(props) {
 
         <Card className={classes.card}>
           <CardContent>
-            <Grid container  >
+            <Grid container spacing={2} >
+              <Grid item >
+                <img className={classes.image} src={ChargingStation_ward} alt="charge station picture" />
+                <Divider />
+              </Grid>
 
-                <Grid item xs container direction="column" spacing={2}>
-                  <Grid item >
-                    <img className={classes.image} src={ChargingStation_ward} alt="charge station picture" />
-                  </Grid>
-
-                  <Divider />
-
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={4} >
                   <Grid item xs>
-                    <Typography className={classes.fonts} >
+                    <Typography className={classes.fonts}  >
                       <Box fontWeight="fontWeightBold" >
-                      {props.name}
-                      </Box>
+                        {props.name}
+                        </Box>
                     </Typography>
-                    <Typography variant="body2" gutterBottom>
+                    <Typography variant="body2" gutterBottom >
                       {props.address}
-                    </Typography>
+                      </Typography>
                     <Typography variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightMedium" >
                         <EvStationIcon style={props.returnStationStatus(props.inUse).color} />
@@ -75,25 +79,31 @@ export default function SingleCard(props) {
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightMedium" >
-                      Stations Available: {stationNum} of {availNum}
+                        Stations Available: {stationNum} of {availNum}
                       </Box>
                     </Typography>
                   </Grid>
 
                   <Grid item>
-                    <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                      <a href={'https://www.google.com/maps/search/?api=1&query=' + props.address}>Open navigation to google maps.</a>
-                    </Typography>
-                  </Grid>
-
-                  <Grid item>
-                    <Typography variant="subtitle1">
-                      {console.log(props.returnDistanceInMiles(props.location))}
-                      {props.returnDistanceInMiles(props.location)}
-                    </Typography>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      href={'https://www.google.com/maps/search/?api=1&query=' + props.address}
+                      className={classes.button}
+                      size="small"
+                    >
+                      Open in Google Maps
+                    </Button>
                   </Grid>
                 </Grid>
 
+                <Grid item>
+                  <Typography variant="subtitle1">
+                    {console.log(props.returnDistanceInMiles(props.location))}
+                    {props.returnDistanceInMiles(props.location)}
+                  </Typography>
+                </Grid>
+              </Grid>
 
             </Grid>
           </CardContent>
