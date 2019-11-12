@@ -17,7 +17,20 @@ export default function Footer(){
       <footer className={classes.footer} >
         <Typography variant="h6" align="center" gutterBottom>
           Temporary Simple Footer
+
+        <div>
+          <a href={"https://hacc.hawaii.gov/"}>
+            Hawai'i Annual Code Challenge 2019.
+          </a>
+        </div>
+        <div>
+          <a href={"https://www.hawaiianelectric.com/products-and-services/electric-vehicles"}>
+            HECO Electric Vehicles
+          </a>
+        </div>
+
         </Typography>
+
       </footer>
   );
 }
