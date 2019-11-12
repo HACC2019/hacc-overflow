@@ -15,15 +15,27 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
     },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
+
     fixedHeight: {
         height: 500,
     },
+    mainHeader: {
+        color: "#37246B",
+        paddingTop: "10px",
+    },
+    secondaryHeader: {
+        paddingTop: "20px",
+        color: "#3B342D",
+    },
+    mainBody: {
+        paddingTop: "12px",
+        paddingBottom: "12px",
+    },
+    mainWrapper: {
+        paddingTop: "20px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+    }
 }));
 
 function withStyles(toRender) {

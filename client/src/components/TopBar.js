@@ -42,41 +42,6 @@ const useStyles = makeStyles(theme => ({
   }),
     backgroundColor: '#3B4985'
   },
-  search: {
-    position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-    width: 200,
-    },
-  },
 }));
 
 export default function TopBar() {
@@ -86,8 +51,8 @@ export default function TopBar() {
     <div>
       <AppBar position="fixed" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <Typography component="h1" variant="h6" color="inherit">
-            Fast Charging Stations
+          <Typography  variant={"h6"} color="inherit">
+            HAWAIIAN ELECTRIC
           </Typography>
         </Toolbar>
       </AppBar>
