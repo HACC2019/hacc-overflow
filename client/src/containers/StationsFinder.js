@@ -7,7 +7,7 @@ import Map from "../components/Map";
 import withStyles from "../components/withStyles";
 import useStationsData from "../hooks/useStationsData";
 import lookup from "../api/lookup";
-import STATION_STATUSES from '../api/constants.js';
+import {STATION_STATUSES} from '../constants.js';
 import Typography from '@material-ui/core/Typography';
 import {Paper} from "@material-ui/core";
 import {STATION_STATUS_COLORS} from "../constants";
@@ -36,6 +36,7 @@ function StationsFinder({classes}) {
     });
 
     const stations = useStationsData();
+    console.log(stations);
 
     useEffect(() => {
         setDrawerContent({
@@ -44,16 +45,15 @@ function StationsFinder({classes}) {
         })
     },[stations]);
 
-    console.log(drawerContent);
 
     const returnStationStatus = (status) => {
-        if(status === STATION_STATUSES.DOWN){
+        if(status === STATION_STATUSES.NOT_AVAILABLE){
             return {
                 color: {color: STATION_STATUS_COLORS.NOT_AVAILABLE},
                 status: 'Station is currently down.'
             };
         }
-        else if(status === STATION_STATUSES.OK){
+        else if(status === STATION_STATUSES.AVAILABLE){
             return {
                 color: {color: STATION_STATUS_COLORS.AVAILABLE},
                 status: 'Station is currently available.'

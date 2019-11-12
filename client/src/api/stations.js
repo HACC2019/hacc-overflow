@@ -1,3 +1,4 @@
+import {STATION_STATUSES} from "../constants";
 
 const URL = 'https://hacc.aparcar.org/stations';
 const SUCCESS = 'success';
@@ -12,8 +13,8 @@ const JSON_KEYS = {
     ADDRESS: 'address',
     LATITUDE: 'latitude',
     LONGITUDE: 'longitude',
-    STATION_STATUS_INDEX: 0,
-    ETA_STATUS_INDEX: 1,
+    STATION_STATUS_INDEX: 1,
+    ETA_STATUS_INDEX: 0,
 };
 
 /**
@@ -58,18 +59,21 @@ function normalizeStationsData(stationsData) {
     const stations = {};
 
     stationsData.forEach(station => {
-        const name = station[JSON_KEYS.NAME];
-        const address = station[JSON_KEYS.ADDRESS];
-        const latitude = station[JSON_KEYS.LATITUDE];
-        const longitude = station[JSON_KEYS.LONGITUDE];
-        const status_code = parseInt(station[JSON_KEYS.DYNAMIC_STATIONS_DATA][JSON_KEYS.STATION_STATUS_INDEX]);
-        const eta = station[JSON_KEYS.DYNAMIC_STATIONS_DATA][JSON_KEYS.ETA_STATUS_INDEX];
+        const staticStation = station[JSON_KEYS.STATIC_STATIONS_DATA];
+        const dynamicStation = station[JSON_KEYS.DYNAMIC_STATIONS_DATA];
+
+        const name = staticStation[JSON_KEYS.NAME];
+        const address = staticStation[JSON_KEYS.ADDRESS];
+        const latitude = staticStation[JSON_KEYS.LATITUDE];
+        const longitude = staticStation[JSON_KEYS.LONGITUDE];
+        const status_code = parseInt(dynamicStation[JSON_KEYS.STATION_STATUS_INDEX]);
+        const eta = dynamicStation[JSON_KEYS.ETA_STATUS_INDEX];
 
         stations[name] = {
             name,
             address,
             location: {latitude, longitude},
-            status: status_code === STATION_STATUSES.UP && eta === 0 ? STATION_STATUSES.IN_USE : status_code,
+            status: status_code === STATION_STATUSES.AVAILABLE && eta === 0 ? STATION_STATUSES.IN_USE : status_code,
             eta, //todo: convert this into nice time format
         };
     });
