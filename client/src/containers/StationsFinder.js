@@ -9,6 +9,7 @@ import useStationsData from "../hooks/useStationsData";
 import lookup from "../api/lookup";
 import STATION_STATUSES from '../api/constants.js';
 import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 const STATION_COLORS = {
     red: '#CD0000',
@@ -139,6 +140,7 @@ function StationsFinder({classes}) {
 
     return (
         <>
+            <Container>
             <Typography variant="h5">The Hawaiian Electric Companies DC Fast Chargers</Typography>
             <Typography variant="body2" gutterBottom>
             To support clean transportation, the Hawaiian Electric Companies received approval from the Hawaii Public Utilities Commission to own and operate publicly accessible DC Fast Chargers across Oahu, Maui County, and Hawaii Island. Below are the locations where electric vehicle owners can quickly charge their vehicles.
@@ -163,6 +165,7 @@ function StationsFinder({classes}) {
                 handleSearch={handleSearch}
                 returnStationStatus={returnStationStatus}
             />
+            </Container>
         </>
     );
 }

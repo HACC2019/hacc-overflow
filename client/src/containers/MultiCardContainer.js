@@ -16,7 +16,7 @@ function MultiCardContainer({stations, getDistance, returnStationStatus}){
   const shownStations = showUsedStations ? stations : stations.filter(stat => stat.inUse === 1);
 
   return (
-      <Grid container direction="column" justify="center" alignItems="center" >
+      <Grid sm container direction="column" justify="center" alignItems="center" >
         <Typography component="div" style={{
           backgroundColor: '#EBF3FE',
           height: '100vh'

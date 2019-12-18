@@ -7,11 +7,11 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import EvStationIcon from '@material-ui/icons/EvStation';
 
 
-const drawerWidth = "300";
+const drawerWidth = "240";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    marginTop: theme.spacing(8),
   },
   drawerHeader: {
     display: 'flex',
@@ -93,9 +94,13 @@ function CardDrawer({setCardDrawer, cardDrawer, renderDrawerContent}) {
             }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleDrawerClose}>
+                  Collapse List
+                  <MenuOpenIcon/>
+            </Button>
           </div>
           <Divider />
           {renderDrawerContent()}

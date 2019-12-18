@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 20,
   },
   image: {
     padding: 10,
@@ -36,7 +36,6 @@ const useStyles = makeStyles({
   },
   fonts: {
     fontWeight: "fontWeightBold",
-
   },
   button: {
     margin: 1,
@@ -66,18 +65,18 @@ export default function SingleCard(props) {
                     <Typography className={classes.fonts}  >
                       <Box fontWeight="fontWeightBold" >
                         {props.name}
-                        </Box>
+                      </Box>
                     </Typography>
-                    <Typography variant="body2" gutterBottom >
+                    <Typography variant="body2" color="textSecondary" gutterBottom className={classes.pos} >
                       {props.address}
                       </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" >
                       <Box fontWeight="fontWeightMedium" >
                         <EvStationIcon style={props.returnStationStatus(props.inUse).color} />
                         {props.returnStationStatus(props.inUse).status}
                       </Box>
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" >
                       <Box fontWeight="fontWeightMedium" >
                         Stations Available: {stationNum} of {availNum}
                       </Box>
@@ -97,11 +96,14 @@ export default function SingleCard(props) {
                   </Grid>
                 </Grid>
 
-                <Grid item>
+                <Grid item container direction="column" >
+                  <Grid item>
                   <Typography variant="subtitle1">
                     {console.log(props.returnDistanceInMiles(props.location))}
                     {props.returnDistanceInMiles(props.location)}
                   </Typography>
+                  </Grid>
+
                 </Grid>
               </Grid>
 
