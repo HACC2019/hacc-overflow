@@ -1,5 +1,4 @@
 import React from 'react';
-import {render} from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,6 +9,7 @@ import ChargingStation_ward from './chargingStation_ward.jpg';
 import Box from '@material-ui/core/Box';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import googleMapsLogo from "./gmaps.png";
+import ReportForm from './ReportForm.js';
 
 const useStyles = makeStyles({
   card: {
@@ -43,6 +43,16 @@ export default function SingleCard(props) {
   const classes = useStyles();
   const stationNum = 1;
   const availNum = 1;
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
     return (
         //Consider a CardAction button here to link to google map navigation
 
@@ -101,6 +111,7 @@ export default function SingleCard(props) {
 
 
             </Grid>
+            <ReportForm name={props.name}/>
           </CardContent>
         </Card>
     );

@@ -5,9 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from "react-leaflet/lib/Tooltip";
-import Fab from "@material-ui/core/Fab";
 import googleMapsLogo from './gmaps.png';
+import ReportForm from './ReportForm.js';
 
 const useStyles = makeStyles({
   card: {
@@ -66,6 +65,7 @@ export default function MultiCard(props) {
                   {props.distance}
                 </Typography >
               </Grid >
+              <ReportForm name={props.name} />
             </Grid >
           </Grid >
         </CardContent>
