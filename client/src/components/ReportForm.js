@@ -14,8 +14,6 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 //Report Form for handling error reports, saves in local hook, not currently linked to backend
 export default function ReportForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [ranking, setRanking] = React.useState(0);
-    const [radioValue, setRadioValue] = React.useState('no')
     const [formValues, setFormValues] = React.useState({
         name: props.name,
         ranking: 0,
