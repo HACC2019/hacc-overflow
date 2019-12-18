@@ -28,11 +28,9 @@ const useStyles = makeStyles({
   title:{
     fontSize: 14,
   },
-  pos: {
-    marginBottom: 12,
-  },
   button: {
     fontSize: 10,
+    marginLeft: 45,
   }
 });
 
